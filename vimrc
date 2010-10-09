@@ -5,8 +5,13 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,big5
 filetype on
 filetype plugin indent on
 syntax on
-colorscheme desert
+if ! has("gui_running")
+    set t_Co=256
+endif
+set bg=dark
+colorscheme peaksea
 
+set ruler
 set autoindent
 set smartindent
 set smarttab
@@ -21,7 +26,9 @@ set guifont=Yahei_Mono:h12:cGB2312
 set directory=$TEMP,$TMP,.
 set backspace=2
 
-map <F4> :tabnew<cr>:ts
+set ignorecase
+
+map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 map <F5> : !php -l % <CR>
 map <F6> :tabnew %:h<CR>
 
@@ -49,15 +56,4 @@ autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
-
-if ! has("gui_running") 
-    set t_Co=256 
-endif 
-" feel free to choose :set background=light for a different style 
-set background=dark 
-colors peaksea 
-
-au FilterWritePost * if &diff | set t_Co=256 | set bg=dark | colorscheme peaksea | else | colorscheme desert | endif
-au BufWinLeave * colorscheme desert
-
-
+autocmd! bufwritepost .vimrc source %
