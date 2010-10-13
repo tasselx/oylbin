@@ -8,6 +8,7 @@ function FindProxyForURL(url, host)
         '21mybbs.com'
         ,'appspot.com'
         ,'avno1.com'
+        ,'android.com'
 
         ,'blogger.com'
         ,'blogspot.com'
@@ -20,6 +21,7 @@ function FindProxyForURL(url, host)
         ,'flickr.com'
         ,'friendfeed.com'
         ,'facebook.com'
+        ,'facebook.net'
         ,'fbcdn.net'
 
         ,'ggpht.com'
