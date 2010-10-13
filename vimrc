@@ -36,8 +36,6 @@ let mapleader=","
 map <leader>f :tabnew<cr>:FufFile<cr>
 "map <leader>c :cd %:h<cr><leader>f
 map <leader>q :q<cr>
-map <left> gT
-map <right> gt
 map <space> :
 nmap <leader>w :w!<cr>
 nmap <leader>n :tabnew<space>
@@ -57,3 +55,9 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd! bufwritepost .vimrc source %
+
+let MyName=system("whoami | tr -d '\r\n'")
+if MyName != 'hotel'
+    map <left> gT
+    map <right> gt
+endif
