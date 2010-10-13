@@ -56,8 +56,15 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 autocmd! bufwritepost .vimrc source %
 
+"ugly hack
 let MyName=system("whoami | tr -d '\r\n'")
 if MyName != 'hotel'
+    map <left> gT
+    map <right> gt
+endif
+
+let MyHost=system("hostname | tr -d '\r\n'")
+if MyHost == 'oylbin-laptop'
     map <left> gT
     map <right> gt
 endif
