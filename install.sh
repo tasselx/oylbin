@@ -1,18 +1,20 @@
 #!/bin/sh
 
-cd $(dirname $0)
+SCRIPT=`readlink -f $0`
+SCRIPTPATH=`dirname $SCRIPT`
 
 rm -rf ~/.vimrc
-ln -s vimrc ~/.vimrc
+ln -s $SCRIPTPATH/vimrc ~/.vimrc
 
 rm -rf ~/.vim
-ln -s vim ~/.vim
+ln -s $SCRIPTPATH/vim ~/.vim
 
 rm -rf ~/.screenrc
-ln -s screenrc ~/.screenrc
+ln -s $SCRIPTPATH/screenrc ~/.screenrc
 
-if [ -f ~/.bashrc ]; then
-    cat bashrc >> ~/.bashrc
+if [ ! -L ~/.bashrc ]; then
+    echo ". $SCRIPTPATH/bashrc" >> ~/.bashrc
 else
-    ln -s bashrc ~/.bashrc
+    rm -rf ~/.bashrc
+    ln -s $SCRIPTPATH/bashrc ~/.bashrc
 fi
