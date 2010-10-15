@@ -61,3 +61,5 @@ xterm-256color)
     export PS1="\u@\h:\w\n> "
     ;;
 esac
+PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME} \007"'
+
