@@ -53,7 +53,7 @@ parse_git_branch() {
 }
 
 case "$TERM" in
-xterm-256color)
+xterm-256color|screen-256color)
     SCREEEN_PS1="Window:$WINDOW"
     export PS1="\e[0;33m\u@\h:\w (${SCREEEN_PS1} \$(parse_git_branch)) > \e[m\n> "
     ;;
@@ -62,4 +62,12 @@ xterm-256color)
     ;;
 esac
 PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME} \007"'
-
+HOSTNAME=`hostname`
+case "$HOSTNAME" in 
+oylbin-laptop)
+    alias screen='screen -T screen-256color'
+    ;;
+*)
+    alias screen='screen -T xterm-256color'
+    ;;
+esac
