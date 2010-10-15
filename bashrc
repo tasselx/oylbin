@@ -53,11 +53,11 @@ parse_git_branch() {
 }
 
 case "$TERM" in
-xterm*|rxvt*|linux*)
-    export PS1="\u@\h:\w\n> "
-    ;;
-*)
+xterm-256color)
     SCREEEN_PS1="Window:$WINDOW"
     export PS1="\e[0;33m\u@\h:\w (${SCREEEN_PS1} \$(parse_git_branch)) > \e[m\n> "
+    ;;
+*)
+    export PS1="\u@\h:\w\n> "
     ;;
 esac
