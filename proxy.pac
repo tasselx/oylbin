@@ -35,6 +35,7 @@ function FindProxyForURL(url, host)
         ,'imageurlhost.com'
 
         ,'metweek.com'
+        ,'mail-archive.com'
 
         ,'pixnet.net'
 
