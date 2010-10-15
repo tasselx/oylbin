@@ -47,12 +47,17 @@ export GREP_OPTIONS="-Ir"
 
 export PATH=~/bin:$PATH
 export LANGUAGE='en_US:en'
+
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/Branch:\1/'
+}
+
 case "$TERM" in
 xterm*|rxvt*|linux*)
     export PS1="\u@\h:\w\n> "
     ;;
 *)
-    SCREEEN_PS1="($WINDOW)"
-    export PS1="\e[0;33m\u@\h:\w ${SCREEEN_PS1}\e[m\n> "
+    SCREEEN_PS1="Window:$WINDOW"
+    export PS1="\e[0;33m\u@\h:\w (${SCREEEN_PS1} \$(parse_git_branch)) > \e[m\n> "
     ;;
 esac
