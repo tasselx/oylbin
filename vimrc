@@ -53,7 +53,7 @@ set backspace=2
 
 set ignorecase
 
-map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+"map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 map <F5> : !php -l % <CR>
 map <F6> :tabnew %:h<CR>
 

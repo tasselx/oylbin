@@ -15,6 +15,16 @@ vbell off
 bindkey ^[[1;5D prev
 bindkey ^[[1;5C next
 
+# F1 ~ F11 
+#bindkey -k k1 command
+#bindkey -k k2 command
+#...
+#bindkey -k k0 command
+#bindkey -k F1 command
+
+# F12 
+bindkey -k F2 screen
+
 encoding UTF-8
 attrcolor b ".I"
 
@@ -31,3 +41,9 @@ termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
 
 # 解决 gnome-terminal + screen 不能滚屏的问题
 termcapinfo xterm ti@:te@
+
+
+hardstatus             alwayslastline                                                                                                                          
+#hardstatus string '%{= mK}%-Lw%{= KW}%50>%n%f* %t%{= mK}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}'
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
