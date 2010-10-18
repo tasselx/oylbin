@@ -57,8 +57,7 @@ function FindProxyForURL(url, host)
     ];
     
     var exp_list = [
-     'https://(encrypted|spreadsheets)\.google\.com/.*',
-     'http://(spreadsheets|groups|picasaweb|feedproxy)\.google\.com/.*',
+     'http(s)?://(sites|encrypted|spreadsheets|groups|picasaweb|feedproxy)\.google\.com/.*',
      'http://www\.google\.com/(((search|url)\?)|analytics|calendar|profile).*',
      'http://[^/]*/search\\?q=cache.*'
     ];
