@@ -22,7 +22,7 @@ bindkey ^[[1;5C next
 #bindkey -k k1 command
 #bindkey -k k2 command
 #...
-#bindkey -k k0 command
+#bindkey -k k; command
 #bindkey -k F1 command
 
 # F12 

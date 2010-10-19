@@ -124,17 +124,19 @@ nnoremap <space> za
 
 
 
-"ugly hack
-let MyName=system("whoami | tr -d '\r\n'")
-if MyName != 'hotel'
-    map <left> gT
-    map <right> gt
-endif
+if has("unix")
+    "ugly hack
+    let MyName=system("whoami | tr -d '\r\n'")
+    if MyName != 'hotel'
+        map <left> gT
+        map <right> gt
+    endif
 
-let MyHost=system("hostname | tr -d '\r\n'")
-if MyHost == 'oylbin-laptop'
-    map <left> gT
-    map <right> gt
+    let MyHost=system("hostname | tr -d '\r\n'")
+    if MyHost == 'oylbin-laptop'
+        map <left> gT
+        map <right> gt
+    endif
 endif
 
 
