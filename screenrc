@@ -6,6 +6,9 @@ startup_message off
 # 禁用 visual bell， 解决屏闪的问题
 vbell off
 
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
 # 把ctrl + left 绑定为 prev 命令,切换至上一个window
 # 把ctrl + right 绑定为 next 命令,切换至下一个window
 #
@@ -29,7 +32,6 @@ encoding UTF-8
 attrcolor b ".I"
 
 
-
 # 支持256色的终端
 # use `ls /usr/share/terminfo/x/` to see the available terms
 #term "xterm-256color"
@@ -41,9 +43,3 @@ termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
 
 # 解决 gnome-terminal + screen 不能滚屏的问题
 termcapinfo xterm ti@:te@
-
-
-hardstatus             alwayslastline                                                                                                                          
-#hardstatus string '%{= mK}%-Lw%{= KW}%50>%n%f* %t%{= mK}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}'
-hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
-

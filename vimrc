@@ -82,6 +82,48 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 " vimrc被修改时自动重新加载
 autocmd! bufwritepost .vimrc source %
 
+
+
+
+let mapleader=","
+
+" Up and down are more logical with g..
+nnoremap <silent> k gk
+nnoremap <silent> j gj
+inoremap <silent> <Up> <Esc>gka
+inoremap <silent> <Down> <Esc>gja
+
+nnoremap <tab> %
+vnoremap <tab> %
+nnoremap ; :
+
+" 选中刚刚粘贴的行
+nnoremap <leader>v V`]
+
+" This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
+inoremap jj <Esc>
+
+" 调用php 检查当前文件的语法
+map <F5> : !php -l % <CR>
+
+" 在新tab打开当前文件所在的目录
+map <F6> :tabnew %:h<CR>
+map <left> gT
+map <right> gt
+
+map <leader>f :tabnew<cr>:FufFile<cr>
+
+
+
+map <leader>q :q<cr>
+nmap <leader>w :w!<cr>
+nmap <leader>n :tabnew<space>
+vmap <leader>c "+y
+vmap <leader>x "+x
+nnoremap <space> za
+
+
+
 "ugly hack
 let MyName=system("whoami | tr -d '\r\n'")
 if MyName != 'hotel'
@@ -113,41 +155,3 @@ endfunc
 " Paste Mode!  Dang! <F10>
 nnoremap <silent> <F10> :call Paste_on_off()<CR>
 set pastetoggle=<F10>
-
-
-
-" Up and down are more logical with g..
-nnoremap <silent> k gk
-nnoremap <silent> j gj
-inoremap <silent> <Up> <Esc>gka
-inoremap <silent> <Down> <Esc>gja
-
-nnoremap <tab> %
-vnoremap <tab> %
-nnoremap ; :
-
-" 选中刚刚粘贴的行
-nnoremap <leader>v V`]
-
-" This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
-inoremap jj <Esc>
-
-" 调用php 检查当前文件的语法
-map <F5> : !php -l % <CR>
-
-" 在新tab打开当前文件所在的目录
-map <F6> :tabnew %:h<CR>
-map <left> gT
-map <right> gt
-
-let mapleader=","
-map <leader>f :tabnew<cr>:FufFile<cr>
-
-
-
-map <leader>q :q<cr>
-nmap <leader>w :w!<cr>
-nmap <leader>n :tabnew<space>
-vmap <leader>c "+y
-vmap <leader>x "+x
-nnoremap <space> za
