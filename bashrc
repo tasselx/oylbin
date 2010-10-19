@@ -66,6 +66,7 @@ HOSTNAME=`hostname`
 case "$HOSTNAME" in 
 oylbin-laptop)
     alias screen='screen -T screen-256color'
+    #xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
     ;;
 *)
     alias screen='screen -T xterm-256color'
