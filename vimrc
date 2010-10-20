@@ -1,3 +1,10 @@
+filetype off
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+call pathogen#runtime_append_all_bundles()
+
+" 自动检测文件类型
+filetype plugin indent on
+
 " 不使用兼容vi的模式
 set nocompatible
 
@@ -7,8 +14,6 @@ set fileencoding=utf-8
 " 打开文件时使用的编码
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,big5
 
-" 自动检测文件类型
-filetype plugin indent on
 
 " 开启语法高亮
 syntax on
@@ -156,3 +161,5 @@ endfunc
 " Paste Mode!  Dang! <F10>
 nnoremap <silent> <F10> :call Paste_on_off()<CR>
 set pastetoggle=<F10>
+
+autocmd BufNewFile,Bufread *.php set keywordprg="help"
