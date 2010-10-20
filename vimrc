@@ -95,7 +95,6 @@ inoremap <silent> <Down> <Esc>gja
 
 nnoremap <tab> %
 vnoremap <tab> %
-nnoremap ; :
 
 " 选中刚刚粘贴的行
 nnoremap <leader>v V`]
