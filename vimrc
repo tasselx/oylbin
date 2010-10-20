@@ -63,7 +63,7 @@ set smartcase
 set guifont=Yahei_Mono:h12:cGB2312
 set backspace=2
 
-set foldmethod=indent
+"set foldmethod=indent
 
 
 " No sound on errors
