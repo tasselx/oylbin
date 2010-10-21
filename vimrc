@@ -31,7 +31,7 @@ colorscheme peaksea
 set nohidden
 
 " Since I use linux, I want this
-"let g:clipbrdDefaultReg = '+'
+let g:clipbrdDefaultReg = '+'
 
 " 更好的命令自动提示菜单
 set wildmenu
@@ -65,7 +65,7 @@ set hlsearch
 set ignorecase
 set smartcase
 
-set guifont=Yahei_Mono:h12:cGB2312
+"set guifont=Yahei_Mono:h12:cGB2312
 set backspace=2
 
 "set foldmethod=indent
