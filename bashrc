@@ -72,3 +72,4 @@ oylbin-laptop)
     alias screen='screen -T xterm-256color'
     ;;
 esac
+umask 002

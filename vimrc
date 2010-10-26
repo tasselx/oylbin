@@ -110,6 +110,8 @@ inoremap jj <Esc>
 " 调用php 检查当前文件的语法
 map <F5> : !php -l % <CR>
 
+map <F4> :grep <C-R><C-W> .
+
 " 在新tab打开当前文件所在的目录
 map <F6> :tabnew %:h<CR>
 map <left> gT
@@ -124,7 +126,8 @@ nmap <leader>w :w!<cr>
 nmap <leader>n :tabnew<space>
 vmap <leader>c "+y
 vmap <leader>x "+x
-nnoremap <space> za
+map <leader>d :!screen bash -c "cd \"`pwd`\" && exec $SHELL --login"<cr>
+"nnoremap <space> za
 
 
 
