@@ -114,6 +114,7 @@ map <F4> :grep <C-R><C-W> .
 
 " 在新tab打开当前文件所在的目录
 map <F6> :tabnew %:h<CR>
+map <F7> :!php %<CR>
 map <left> gT
 map <right> gt
 
@@ -127,6 +128,7 @@ nmap <leader>n :tabnew<space>
 vmap <leader>c "+y
 vmap <leader>x "+x
 map <leader>d :!screen bash -c "cd \"`pwd`\" && exec $SHELL --login"<cr>
+map <leader>t :!phpunit %<cr>
 "nnoremap <space> za
 
 

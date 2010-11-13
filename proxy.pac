@@ -37,7 +37,9 @@ function FindProxyForURL(url, host)
         ,'metweek.com'
         ,'mail-archive.com'
 
+        ,'payhk.boyaa.us'
         ,'pixnet.net'
+        ,'posterous.com'
 
         ,'sexinsex.net'
 
