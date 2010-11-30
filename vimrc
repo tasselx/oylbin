@@ -1,6 +1,8 @@
 filetype off
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-call pathogen#runtime_append_all_bundles()
+if has("unix")
+    call pathogen#runtime_append_all_bundles()
+endif
 
 " 自动检测文件类型
 filetype plugin indent on
@@ -20,12 +22,13 @@ syntax on
 
 
 
-if ! has("gui_running")
-    set t_Co=256
-endif
+"if ! has("gui_running")
+"    set t_Co=256
+"endif
 
-set background=dark
-colorscheme peaksea
+"set background=dark
+"colorscheme peaksea
+colorscheme desert
 
 " When I close a tab, remove the buffer
 set nohidden
@@ -63,7 +66,7 @@ set hlsearch
 
 " 忽略大小写
 set ignorecase
-set smartcase
+"set smartcase
 
 "set guifont=Yahei_Mono:h12:cGB2312
 set backspace=2
@@ -149,22 +152,5 @@ if has("unix")
 endif
 
 
-
-let paste_mode = 0 " 0 = normal, 1 = paste
-
-func! Paste_on_off()
-   if g:paste_mode == 0
-      set paste
-      let g:paste_mode = 1
-   else
-      set nopaste
-      let g:paste_mode = 0
-   endif
-   return
-endfunc
-
-" Paste Mode!  Dang! <F10>
-nnoremap <silent> <F10> :call Paste_on_off()<CR>
-set pastetoggle=<F10>
 
 autocmd BufNewFile,Bufread *.php set keywordprg="help"
