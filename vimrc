@@ -26,9 +26,6 @@ syntax on
 "    set t_Co=256
 "endif
 
-"set background=dark
-"colorscheme peaksea
-colorscheme desert
 
 " When I close a tab, remove the buffer
 set nohidden
@@ -118,8 +115,6 @@ map <F4> :grep <C-R><C-W> .
 " 在新tab打开当前文件所在的目录
 map <F6> :tabnew %:h<CR>
 map <F7> :!php %<CR>
-map <left> gT
-map <right> gt
 
 map <leader>f :tabnew<cr>:FufFile<cr>
 
@@ -142,12 +137,15 @@ if has("unix")
     if MyName != 'hotel'
         map <left> gT
         map <right> gt
+        "colorscheme desert
     endif
 
     let MyHost=system("hostname | tr -d '\r\n'")
     if MyHost == 'oylbin-laptop'
         map <left> gT
         map <right> gt
+        set background=dark
+        colorscheme peaksea
     endif
 endif
 
