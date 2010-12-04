@@ -33,6 +33,7 @@ function FindProxyForURL(url, host)
         ,'ihompy.com'
         ,'img.ly'
         ,'imageurlhost.com'
+        ,'is.gd'
 
         ,'metweek.com'
         ,'mail-archive.com'
