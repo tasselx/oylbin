@@ -123,9 +123,9 @@ map <leader>f :tabnew<cr>:FufFile<cr>
 map <leader>q :q<cr>
 nmap <leader>w :w!<cr>
 nmap <leader>n :tabnew<space>
-vmap <leader>c "+y
-vmap <leader>x "+x
-map <leader>d :!screen bash -c "cd \"`pwd`\" && exec $SHELL --login"<cr>
+"vmap <leader>c "+y
+"vmap <leader>x "+x
+"map <leader>d :!screen bash -c "cd \"`pwd`\" && exec $SHELL --login"<cr>
 map <leader>t :!phpunit %<cr>
 "nnoremap <space> za
 
