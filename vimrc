@@ -22,9 +22,6 @@ syntax on
 
 
 
-"if ! has("gui_running")
-"    set t_Co=256
-"endif
 
 
 " When I close a tab, remove the buffer
@@ -131,21 +128,37 @@ map <leader>t :!phpunit %<cr>
 
 
 
+
+
+map <leader>it O<CR><C-R>=strftime("%Y-%m-%d %H:%M")<CR><CR>
+map <leader>id a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+
+
 if has("unix")
     "ugly hack
     let MyName=system("whoami | tr -d '\r\n'")
     if MyName != 'hotel'
         map <left> gT
         map <right> gt
-        "colorscheme desert
     endif
 
     let MyHost=system("hostname | tr -d '\r\n'")
-    if MyHost == 'oylbin-laptop'
+    if MyHost == 'owen-laptop'
         map <left> gT
         map <right> gt
-        set background=dark
-        colorscheme peaksea
+        if has("gui_running")
+            set guifont=Monaco\ 10
+        else
+            set t_Co=256
+        endif
+        if &diff
+            set background=dark
+            colorscheme peaksea
+        else
+            set background=dark
+            colorscheme peaksea
+            "colorscheme desert
+        endif
     endif
 endif
 

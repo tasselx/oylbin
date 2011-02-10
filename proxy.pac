@@ -44,9 +44,11 @@ function FindProxyForURL(url, host)
 
         ,'sexinsex.net'
 
+        ,'t.co'
         ,'twitgoo.com'
         ,'twitter.com'
         ,'twitpic.com'
+        ,'twimg.com'
         ,'tweetphoto.com'
         ,'teamdouche.net'
 

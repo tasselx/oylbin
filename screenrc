@@ -35,11 +35,12 @@ attrcolor b ".I"
 # 支持256色的终端
 # use `ls /usr/share/terminfo/x/` to see the available terms
 #term "xterm-256color"
+#term "xterm-color"
 #term "screen-256color"
 
 # tell screen how to set colors. AB = background, AF=foreground
 termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
-termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+#termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
 
 # 解决 gnome-terminal + screen 不能滚屏的问题
 termcapinfo xterm ti@:te@

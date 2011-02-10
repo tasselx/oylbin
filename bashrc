@@ -73,3 +73,7 @@ oylbin-laptop)
     ;;
 esac
 umask 002
+
+export PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig
+export LD_LIBRARY_PATH=$HOME/local/lib
+export PATH=$PATH:$HOME/local/bin
