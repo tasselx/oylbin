@@ -113,7 +113,8 @@ map <F4> :grep <C-R><C-W> .
 map <F6> :tabnew %:h<CR>
 map <F7> :!php %<CR>
 
-map <leader>f :tabnew<cr>:FufFile<cr>
+"map <leader>f :tabnew<cr>:FufFile<cr>
+map <leader>f :FufFile<cr>
 
 
 

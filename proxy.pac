@@ -17,6 +17,7 @@ function FindProxyForURL(url, host)
         ,'caobian.info'
 
         ,'fc2.com'
+        ,'feedburner.com'
         ,'ff.im'
         ,'flickr.com'
         ,'friendfeed.com'
@@ -24,6 +25,7 @@ function FindProxyForURL(url, host)
         ,'facebook.net'
         ,'fbcdn.net'
 
+        ,'gawker.com'
         ,'ggpht.com'
         ,'goo.gl'
         ,'googleusercontent.com'
@@ -35,14 +37,19 @@ function FindProxyForURL(url, host)
         ,'imageurlhost.com'
         ,'is.gd'
 
+        ,'launchpad.net'
+
         ,'metweek.com'
         ,'mail-archive.com'
 
         ,'payhk.boyaa.us'
         ,'pixnet.net'
+        ,'plurk.com'
         ,'posterous.com'
 
         ,'sexinsex.net'
+        ,'scribd.com'
+        ,'scribdassets.com'
 
         ,'t.co'
         ,'twitgoo.com'

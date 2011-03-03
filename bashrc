@@ -35,6 +35,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias 50pull='ssh hotel@h50 "cd /home/hotel/work/zeus/current && git pull"'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -43,9 +44,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export GREP_OPTIONS="-Ir"
+export GREP_OPTIONS="-ir"
 
-export PATH=~/bin:$PATH
+export PATH=~/bin:~/local/bin:~/local/src/redis-2.2.0-rc4/src:$PATH
 export LANGUAGE='en_US:en'
 
 parse_git_branch() {
@@ -76,4 +77,3 @@ umask 002
 
 export PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig
 export LD_LIBRARY_PATH=$HOME/local/lib
-export PATH=$PATH:$HOME/local/bin
