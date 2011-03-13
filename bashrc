@@ -35,7 +35,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias 50pull='ssh hotel@h50 "cd /home/hotel/work/zeus/current && git pull"'
+alias 50pull='ssh hotel@h50 "cd /home/hotel/work/zeus/current && git pull && cd /home/hotel/work/zeusconfig/ && git pull"'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -46,7 +46,7 @@ fi
 
 export GREP_OPTIONS="-ir"
 
-export PATH=~/bin:~/local/bin:~/local/src/redis-2.2.0-rc4/src:$PATH
+export PATH=~/bin:~/local/bin:~/local/src/redis/src:$PATH
 export LANGUAGE='en_US:en'
 
 parse_git_branch() {
@@ -71,6 +71,7 @@ oylbin-laptop)
     ;;
 *)
     alias screen='screen -T xterm-256color'
+    alias s='screen -T xterm-256color'
     ;;
 esac
 umask 002

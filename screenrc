@@ -44,3 +44,5 @@ termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
 
 # 解决 gnome-terminal + screen 不能滚屏的问题
 termcapinfo xterm ti@:te@
+
+termcapinfo xterm* ti@:te@
