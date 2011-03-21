@@ -10,6 +10,7 @@ function FindProxyForURL(url, host)
         ,'avno1.com'
         ,'android.com'
 
+        ,'bitsnoop.com'
         ,'blogger.com'
         ,'blogspot.com'
         ,'bit.ly'
@@ -28,6 +29,7 @@ function FindProxyForURL(url, host)
         ,'gawker.com'
         ,'ggpht.com'
         ,'goo.gl'
+        ,'google.com'
         ,'googleusercontent.com'
 
         ,'hecaitou.net'

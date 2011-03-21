@@ -107,7 +107,7 @@ inoremap jj <Esc>
 " 调用php 检查当前文件的语法
 map <F5> : !php -l % <CR>
 
-map <F4> :grep <C-R><C-W> .
+map <F4> :Ack <C-R><C-W> .
 
 " 在新tab打开当前文件所在的目录
 map <F6> :tabnew %:h<CR>
