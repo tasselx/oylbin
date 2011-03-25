@@ -162,7 +162,15 @@ if has("unix")
         endif
     endif
 endif
+if has("gui_running")
+    colorscheme desert
+    set go-=T
+    set go-=m
+endif
 
 
 
 autocmd BufNewFile,Bufread *.php set keywordprg="help"
+"syntax enable
+"let g:php_folding=2
+"set foldmethod=syntax
