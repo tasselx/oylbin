@@ -125,6 +125,7 @@ nmap <leader>n :tabnew<space>
 "vmap <leader>x "+x
 "map <leader>d :!screen bash -c "cd \"`pwd`\" && exec $SHELL --login"<cr>
 map <leader>t :!phpunit %<cr>
+map <leader>T :!phpunit --filter <C-R><C-W> %<cr>
 "nnoremap <space> za
 
 
