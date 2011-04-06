@@ -46,7 +46,7 @@ fi
 
 export GREP_OPTIONS="-ir"
 
-export PATH=~/bin:~/local/bin:~/local/src/redis/src:$PATH
+export PATH=~/bin:~/local/bin:~/local/src/redis/src:/home/owen/.gem/ruby/1.8/bin:$PATH
 export LANGUAGE='en_US:en'
 
 parse_git_branch() {

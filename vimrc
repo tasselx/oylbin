@@ -105,13 +105,24 @@ nnoremap <leader>v V`]
 inoremap jj <Esc>
 
 " 调用php 检查当前文件的语法
-map <F5> : !php -l % <CR>
+map <F5> :call Execute_Script()<CR>
+function! Execute_Script()
+    if &filetype == 'php'
+        :w
+        execute '!php %'
+    elseif &filetype == 'python'
+        :w
+        execute '!python %'
+    elseif &filetype == 'sh'
+        :w
+        execute '!bash -x %'
+    endif
+endfunction
 
 map <F4> :Ack <C-R><C-W> .
 
 " 在新tab打开当前文件所在的目录
 map <F6> :tabnew %:h<CR>
-map <F7> :!php %<CR>
 
 "map <leader>f :tabnew<cr>:FufFile<cr>
 map <leader>f :FufFile<cr>
@@ -124,9 +135,7 @@ nmap <leader>n :tabnew<space>
 "vmap <leader>c "+y
 "vmap <leader>x "+x
 "map <leader>d :!screen bash -c "cd \"`pwd`\" && exec $SHELL --login"<cr>
-map <leader>t :!phpunit %<cr>
-map <leader>T :!phpunit --filter <C-R><C-W> %<cr>
-"nnoremap <space> za
+nnoremap <space> :cn<cr>
 
 
 
@@ -171,7 +180,14 @@ endif
 
 
 
-autocmd BufNewFile,Bufread *.php set keywordprg="help"
+"autocmd BufNewFile,Bufread *.php call Set_php_options()
+autocmd filetype php call Set_php_options()
 "syntax enable
 "let g:php_folding=2
 "set foldmethod=syntax
+function! Set_php_options() 
+    set keywordprg="help"
+    map <leader>t :!phpunit %<cr>
+    map <leader>T :!phpunit --filter <C-R><C-W> %<cr>
+    map <F7> :!php -l %<CR>
+endfunction

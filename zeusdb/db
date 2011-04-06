@@ -1,0 +1,243 @@
+#!/bin/bash
+REDIS_SERVER='redis-server'
+TOKYOTYRANT_SERVER="/home/owen/local/bin/ttserver"
+
+# setting environment variables
+LANG=C
+LC_ALL=C
+PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"
+export LANG LC_ALL PATH
+
+SCRIPT=`readlink -f $0`
+SCRIPTDIR=`dirname $SCRIPT`
+
+function print_usage {
+    echo "$0  [all|dir_name|config_file] [start|stop|restart]"
+    exit 1
+}
+
+if [[ $# -ne 2 ]]; then
+    print_usage
+fi
+
+function start_redis {
+    config_file=$1
+    if [[ ! -f "$SCRIPTDIR/$config_file" ]]; then
+        echo "config file not exists: $SCRIPTDIR/$config_file"
+        return 1
+    fi
+    db_type=`echo $config_file | awk -F. '{print $1}'`
+    db_name=`echo $config_file | awk -F. '{print $2}'`
+    db_port=`echo $config_file | awk -F. '{print $3}'`
+    if [[ "$db_type" != "redis" ]]; then
+        echo "must give start_redis with redis config"
+        return 1
+    fi
+
+    folder_name="$SCRIPTDIR/${db_type}.${db_name}.${db_port}"
+    if [[ ! -d "$folder_name" ]]; then
+        mkdir $folder_name
+        if [[ $? -ne 0 ]]; then
+            echo "failed to mkdir $folder_name"
+            return 1
+        fi
+    fi
+    if [[ -f "$folder_name/pid" ]];then
+        pid=`cat $folder_name/pid`
+        num=`ps $pid | wc -l`
+        if [[ $num -gt 1 ]];then
+            ps $pid
+            echo "redis server is running"
+            return 1
+        else
+            rm $folder_name/pid
+        fi
+    fi
+    cat $SCRIPTDIR/common.redis > $folder_name/redis.conf
+    cat $SCRIPTDIR/$config_file >> $folder_name/redis.conf
+    echo "port $db_port" >> $folder_name/redis.conf
+    cd $folder_name && $REDIS_SERVER `pwd`/redis.conf
+    sleep 0.1
+    if [[ -f "$folder_name/pid" ]];then
+        echo "success start redis server with config $SCRIPTDIR/$config_file"
+        pid=`cat $folder_name/pid`
+        ps $pid
+    else
+        echo "failed to start redis server with config $SCRIPTDIR/$config_file"
+        tail $folder_name/redis.log
+    fi
+}
+function stop_redis {
+    config_file=$1
+    if [[ ! -f "$SCRIPTDIR/$config_file" ]]; then
+        echo "config file not exists: $SCRIPTDIR/$config_file"
+        return 1
+    fi
+    db_type=`echo $config_file | awk -F. '{print $1}'`
+    db_name=`echo $config_file | awk -F. '{print $2}'`
+    db_port=`echo $config_file | awk -F. '{print $3}'`
+
+    folder_name="$SCRIPTDIR/${db_type}.${db_name}.${db_port}"
+    stop $folder_name/pid
+}
+function stop_tokyotyrant {
+    stop_redis $1
+}
+function start_tokyotyrant {
+
+    config_file=$1
+    if [[ ! -f "$SCRIPTDIR/$config_file" ]]; then
+        echo "config file not exists: $SCRIPTDIR/$config_file"
+        return 1
+    fi
+    db_type=`echo $config_file | awk -F. '{print $1}'`
+    db_name=`echo $config_file | awk -F. '{print $2}'`
+    db_port=`echo $config_file | awk -F. '{print $3}'`
+    if [[ "$db_type" != "tokyotyrant" ]]; then
+        echo "must give start_tokyotyrant with tokyotyrant config"
+        return 1
+    fi
+
+    folder_name="$SCRIPTDIR/${db_type}.${db_name}.${db_port}"
+    if [[ ! -d "$folder_name" ]]; then
+        mkdir $folder_name
+        if [[ $? -ne 0 ]]; then
+            echo "failed to mkdir $folder_name"
+            return 1
+        fi
+    fi
+    if [[ -f "$folder_name/pid" ]];then
+        pid=`cat $folder_name/pid`
+        num=`ps $pid | wc -l`
+        if [[ $num -gt 1 ]];then
+            ps $pid
+            echo "tokyotyrant server is running"
+            return 1
+        else
+            rm $folder_name/pid
+        fi
+    fi
+
+    source $SCRIPTDIR/common.tokyotyrant
+    source $SCRIPTDIR/$config_file
+
+    if [ -z "$db_port" ] || [ -z "$db_name" ] ; then
+        printf 'Invalid configuration\n'
+        return 1
+    fi
+
+    printf 'Starting the server of Tokyo Tyrant\n'
+
+    cmd="$TOKYOTYRANT_SERVER -port $db_port"
+    for key in host thnum tout ulim sid mhost mport ; do
+        option_name="option_$key"
+        if [ -n "${!option_name}" ]; then
+            cmd="$cmd -$key ${!option_name}"
+        fi
+    done
+    for key in pid log ulog rts ; do
+        option_name="option_$key"
+        if [ -n "${!option_name}" ]; then
+            cmd="$cmd -$key $folder_name/${!option_name}"
+            if [[ $key = "ulog" ]]; then
+                mkdir -p $folder_name/${!option_name}
+            fi
+        fi
+    done
+
+    for key in dmn kl ld le uas rcc ;do
+        option_name="option_$key"
+        if [[ "${!option_name}" -eq 1 ]]; then
+            cmd="$cmd -$key"
+        fi
+    done
+    
+    cmd="$cmd $folder_name/${db_name}${db_type_and_param}"
+    printf "Executing: %s\n" "$cmd"
+    $cmd
+    if [ "$?" -eq 0 ] ; then
+        printf 'Done\n'
+        return 0
+    else
+        printf 'The server could not started\n'
+        return 1
+    fi
+}
+
+function start_all {
+    cd $SCRIPTDIR
+    for config_file in `ls redis*conf`;do
+        start_redis $config_file
+    done
+    cd $SCRIPTDIR
+    for config_file in `ls tokyotyrant*conf`;do
+        start_tokyotyrant $config_file
+    done
+}
+function stop_all {
+    cd $SCRIPTDIR
+    for config_file in `ls *conf`;do
+        db_type=`echo $config_file | awk -F. '{print $1}'`
+        db_name=`echo $config_file | awk -F. '{print $2}'`
+        db_port=`echo $config_file | awk -F. '{print $3}'`
+        pidfile="$SCRIPTDIR/${db_type}.${db_name}.${db_port}/pid"
+        stop $pidfile
+    done
+}
+function restart_all {
+    stop_all
+    start_all
+}
+function stop {
+    pidfile=$1
+    printf 'Stopping the server \n'
+    if [ -f "$pidfile" ] ; then
+        pid=`cat "$pidfile"`
+        printf "Sending the terminal signal to the process: %s\n" "$pid"
+        kill -TERM "$pid"
+        c=0
+        while true ; do
+            sleep 0.1
+            if [ -f "$pidfile" ] ; then
+                c=`expr $c + 1`
+                if [ "$c" -ge 100 ] ; then
+                    printf 'Hanging process: %d\n' "$pid"
+                    return 1
+                fi
+            else
+                printf 'Done\n'
+                return 0
+            fi
+        done
+    else
+        printf 'No process found\n'
+        return 1
+    fi
+}
+
+db_type=`echo $1 | awk -F. '{print $1}'`
+if [[ "$db_type" != "redis" ]] && [[ "$db_type" != 'tokyotyrant' ]] && [[ "$db_type" != 'all' ]]; then
+    echo "invalid db type: $db_type"
+    exit 1
+fi
+if [[ -d $1 ]]; then
+    config_file=$1.conf
+else
+    config_file=$1
+fi
+
+case "$2" in
+start)
+    start_${db_type} $config_file
+    ;;
+stop)
+    stop_${db_type} $config_file
+    ;;
+restart)
+    stop_${db_type} $config_file
+    start_${db_type} $config_file
+    ;;
+*)
+    print_usage
+    ;;
+esac
