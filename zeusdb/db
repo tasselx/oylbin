@@ -193,22 +193,28 @@ function stop {
     printf 'Stopping the server \n'
     if [ -f "$pidfile" ] ; then
         pid=`cat "$pidfile"`
-        printf "Sending the terminal signal to the process: %s\n" "$pid"
-        kill -TERM "$pid"
-        c=0
-        while true ; do
-            sleep 0.1
-            if [ -f "$pidfile" ] ; then
-                c=`expr $c + 1`
-                if [ "$c" -ge 100 ] ; then
-                    printf 'Hanging process: %d\n' "$pid"
-                    return 1
+        num=`ps $pid | wc -l`
+        if [[ $num -gt 1 ]];then
+            printf "Sending the terminal signal to the process: %s\n" "$pid"
+            kill -TERM "$pid"
+            c=0
+            while true ; do
+                sleep 0.1
+                if [ -f "$pidfile" ] ; then
+                    c=`expr $c + 1`
+                    if [ "$c" -ge 100 ] ; then
+                        printf 'Hanging process: %d\n' "$pid"
+                        return 1
+                    fi
+                else
+                    printf 'Done\n'
+                    return 0
                 fi
-            else
-                printf 'Done\n'
-                return 0
-            fi
-        done
+            done
+        else
+            printf 'No process found\n'
+            return 1
+        fi
     else
         printf 'No process found\n'
         return 1
