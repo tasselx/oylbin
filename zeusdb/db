@@ -1,5 +1,5 @@
 #!/bin/bash
-REDIS_SERVER='redis-server'
+REDIS_SERVER='/home/owen/local/src/redis/src/redis-server'
 TOKYOTYRANT_SERVER="/home/owen/local/bin/ttserver"
 
 # setting environment variables
