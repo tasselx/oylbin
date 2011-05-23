@@ -120,6 +120,7 @@ function! Execute_Script()
 endfunction
 
 map <F4> :Ack <C-R><C-W> .
+map <F3> :grep <C-R><C-W> .
 
 " 在新tab打开当前文件所在的目录
 map <F6> :tabnew %:h<CR>
