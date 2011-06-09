@@ -1,22 +1,19 @@
-# 默认的快捷键
 escape ^Zz
-
 startup_message off
-
 # 禁用 visual bell， 解决屏闪的问题
 vbell off
-
-hardstatus alwayslastline
-hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
-
+#hardstatus alwayslastline
+#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+ 
 # 把ctrl + left 绑定为 prev 命令,切换至上一个window
 # 把ctrl + right 绑定为 next 命令,切换至下一个window
-#
 # 要查看这种特殊的快捷键的key code，可以 
 # cat > /dev/null 
 # 然后在按下快捷键的同时，终端会显示出相应的key code
 bindkey ^[[1;5D prev
 bindkey ^[[1;5C next
+bindkey ^[1 prev
+bindkey ^[2 next
 
 # F1 ~ F11 
 #bindkey -k k1 command
@@ -24,13 +21,11 @@ bindkey ^[[1;5C next
 #...
 #bindkey -k k; command
 #bindkey -k F1 command
-
 # F12 
 bindkey -k F2 screen
 
 encoding UTF-8
 attrcolor b ".I"
-
 
 # 支持256色的终端
 # use `ls /usr/share/terminfo/x/` to see the available terms
@@ -44,5 +39,4 @@ termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
 
 # 解决 gnome-terminal + screen 不能滚屏的问题
 termcapinfo xterm ti@:te@
-
 termcapinfo xterm* ti@:te@

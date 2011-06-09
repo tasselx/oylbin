@@ -1,3 +1,7 @@
+lang en_US.UTF-8
+language mes en_US.UTF-8
+set langmenu=en_US.UTF-8
+
 filetype off
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 if has("unix")
@@ -25,7 +29,7 @@ syntax on
 
 
 " When I close a tab, remove the buffer
-set nohidden
+set hidden
 
 " Since I use linux, I want this
 let g:clipbrdDefaultReg = '+'
@@ -39,7 +43,7 @@ set ruler
 
 " 自动缩进 
 set autoindent
-set smartindent
+"set smartindent
 
 
 " <TAB> 自动转换为4个空格
@@ -101,8 +105,13 @@ vnoremap <tab> %
 " 选中刚刚粘贴的行
 nnoremap <leader>v V`]
 
+"inoremap <Esc> <nop>
 " This is totally awesome - remap jj to escape in insert mode.  You'll never type jj anyway, so it's great!
 inoremap jj <Esc>
+
+"set textwidth=79
+"set formatoptions=qrn1
+"set colorcolumn=85
 
 " 调用php 检查当前文件的语法
 map <F5> :call Execute_Script()<CR>
@@ -116,6 +125,9 @@ function! Execute_Script()
     elseif &filetype == 'sh'
         :w
         execute '!bash -x %'
+    elseif &filetype == 'make'
+        :w
+        :make
     endif
 endfunction
 
@@ -144,6 +156,8 @@ nnoremap <space> :cn<cr>
 
 map <leader>it O<CR><C-R>=strftime("%Y-%m-%d %H:%M")<CR><CR>
 map <leader>id a<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+map <C-H> gT
+map <C-L> gt
 
 
 if has("unix")
@@ -192,3 +206,52 @@ function! Set_php_options()
     map <leader>T :!phpunit --filter <C-R><C-W> %<cr>
     map <F7> :!php -l %<CR>
 endfunction
+let g:debuggerPort = 9001
+map <S-Insert> "+p
+inoremap <S-Insert> <esc>"+pa
+
+nnoremap <leader><space> :noh<cr>
+
+
+" UltraBlog config
+let ub_blog = {'login_name':'admin',
+            \'password':'ustc.owen',
+            \'xmlrpc':'http://blog.mfaathp.com/xmlrpc.php',
+            \'db':'~/.vim/UltraBlog.db'
+            \}
+ 
+" Default pagesize of local post list, see :help ub_local_pagesize for more information
+let ub_local_pagesize = 30
+ 
+" Default pagesize of remote post list, see :help ub_remote_pagesize for more information
+let ub_remote_pagesize = 15
+ 
+" Proudly show your visitors that you are blogging with the world's most powerful editor
+let ub_append_promotion_link = 1
+ 
+" Set width of the local id column in post or page lists
+let ub_list_col1_width = 7
+ 
+" Set width of the remote id column in post or page lists
+let ub_list_col2_width = 8
+ 
+" Set width of the status column in post or page lists
+let ub_list_col3_width = 11
+ 
+" Set this value to 1 if you want to use editor mode.
+let ub_editor_mode = 0
+ 
+" Set this value to 1 if you want to save posts/pages immediately after they are fetched from the blog.
+let ub_save_after_opened = 0
+ 
+" Set this value to 0 if you do not want to save posts/pages immediately after they are sent to the blog.
+let ub_save_after_sent = 1
+ 
+" Set the following options to use a custom extenal command as the converter.
+let ub_converter_command = 'pandoc'
+let ub_converter_options = ['--reference-links']
+let ub_converter_option_from = '--from=%s'
+let ub_converter_option_to = '--to=%s'
+command! -complete=file -nargs=1 Remove :echo 'Remove: '.'<f-args>'.' '.(delete(<f-args>) == 0 ? 'SUCCEEDED' : 'FAILED')
+
+let g:html_indent_inctags = "html,body,head,tbody"

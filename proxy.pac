@@ -61,6 +61,7 @@ function FindProxyForURL(url, host)
         ,'tweetphoto.com'
         ,'teamdouche.net'
 
+        ,'w3schools.com'
         ,'wordpress.com'
 
         ,'xuite.net'
