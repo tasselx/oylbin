@@ -29,7 +29,7 @@ syntax on
 
 
 " When I close a tab, remove the buffer
-set hidden
+set nohidden
 
 " Since I use linux, I want this
 let g:clipbrdDefaultReg = '+'
@@ -212,11 +212,12 @@ inoremap <S-Insert> <esc>"+pa
 
 nnoremap <leader><space> :noh<cr>
 
+let g:html_indent_inctags = "html,body,head,tbody"
 
-" UltraBlog config
-let ub_blog = {'login_name':'admin',
+" === begin of  UltraBlog config ===
+let ub_blog = {'login_name':'oylbin',
             \'password':'ustc.owen',
-            \'xmlrpc':'http://blog.mfaathp.com/xmlrpc.php',
+            \'xmlrpc':'http://ouyang.me/xmlrpc.php',
             \'db':'~/.vim/UltraBlog.db'
             \}
  
@@ -252,6 +253,6 @@ let ub_converter_command = 'pandoc'
 let ub_converter_options = ['--reference-links']
 let ub_converter_option_from = '--from=%s'
 let ub_converter_option_to = '--to=%s'
+" === begin of  UltraBlog config ===
+ 
 command! -complete=file -nargs=1 Remove :echo 'Remove: '.'<f-args>'.' '.(delete(<f-args>) == 0 ? 'SUCCEEDED' : 'FAILED')
-
-let g:html_indent_inctags = "html,body,head,tbody"
