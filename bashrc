@@ -35,7 +35,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias 55pull='ssh work@h55 "cd /home/work/zeus/apps/adventurer_backend/ && git pull "'
+alias 55pull='ssh work@h55 "cd /home/work/zeus/apps/dev/ && git pull "'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -46,7 +46,7 @@ fi
 
 export GREP_OPTIONS="-ir"
 
-export PATH=~/bin:~/local/bin:~/local/src/redis/src:/home/owen/.gem/ruby/1.8/bin:$PATH
+export PATH=~/bin:~/local/bin:~/local/src/redis/src:/home/owen/.gem/ruby/1.8/bin:/home/owen/Downloads/google_appengine:$PATH
 export LANGUAGE='en_US:en'
 
 parse_git_branch() {

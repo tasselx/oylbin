@@ -124,7 +124,7 @@ function! Execute_Script()
         execute '!python %'
     elseif &filetype == 'sh'
         :w
-        execute '!bash -x %'
+        execute '!bash -ex %'
     elseif &filetype == 'make'
         :w
         :make
@@ -193,7 +193,8 @@ if has("gui_running")
     set go-=m
 endif
 
-
+autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
 "autocmd BufNewFile,Bufread *.php call Set_php_options()
 autocmd filetype php call Set_php_options()
