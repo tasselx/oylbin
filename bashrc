@@ -35,7 +35,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias 50pull='ssh hotel@h50 "cd /home/hotel/work/zeus/current && git pull && cd /home/hotel/work/zeusconfig/ && git pull"'
+alias 55pull='ssh work@h55 "cd /home/work/zeus/apps/adventurer_backend/ && git pull "'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -59,7 +59,8 @@ xterm-256color|screen-256color)
     export PS1="\e[0;33m\u@\h:\w (${SCREEEN_PS1} \$(parse_git_branch)) > \e[m\n> "
     ;;
 *)
-    export PS1="\u@\h:\w\n> "
+    export PS1="\e[0;36m\u@\h:\w (\$(parse_git_branch)) > \e[m\n> "
+    #export PS1="\u@\h:\w\n> "
     ;;
 esac
 PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME} \007"'
