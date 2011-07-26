@@ -180,6 +180,7 @@ if has("unix")
         if &diff
             set background=dark
             colorscheme peaksea
+            syntax off
         else
             set background=dark
             colorscheme peaksea
