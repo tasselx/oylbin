@@ -2,8 +2,12 @@ escape ^Zz
 startup_message off
 # 禁用 visual bell， 解决屏闪的问题
 vbell off
-#hardstatus alwayslastline
-#hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+# 解决 gnome-terminal + screen 不能滚屏的问题
+termcapinfo xterm* ti@:te@
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
  
 # 把ctrl + left 绑定为 prev 命令,切换至上一个window
 # 把ctrl + right 绑定为 next 命令,切换至下一个window
@@ -12,8 +16,17 @@ vbell off
 # 然后在按下快捷键的同时，终端会显示出相应的key code
 bindkey ^[[1;5D prev
 bindkey ^[[1;5C next
-bindkey ^[1 prev
-bindkey ^[2 next
+
+bindkey ^[0 select 0
+bindkey ^[1 select 1
+bindkey ^[2 select 2
+bindkey ^[3 select 3
+bindkey ^[4 select 4
+bindkey ^[5 select 5
+bindkey ^[6 select 6
+bindkey ^[7 select 7
+bindkey ^[8 select 8
+bindkey ^[9 select 9
 
 # F1 ~ F11 
 #bindkey -k k1 command
@@ -34,9 +47,4 @@ attrcolor b ".I"
 #term "screen-256color"
 
 # tell screen how to set colors. AB = background, AF=foreground
-termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
-#termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
-
-# 解决 gnome-terminal + screen 不能滚屏的问题
-termcapinfo xterm ti@:te@
-termcapinfo xterm* ti@:te@
+termcapinfo xterm* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
