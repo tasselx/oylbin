@@ -30,6 +30,8 @@ function FindProxyForURL(url, host)
         ,'ggpht.com'
         ,'goo.gl'
         ,'google.com'
+        ,'google.com.hk'
+        ,'google.com.tw'
         ,'googleusercontent.com'
 
         ,'hecaitou.net'
@@ -61,6 +63,7 @@ function FindProxyForURL(url, host)
         ,'tweetphoto.com'
         ,'teamdouche.net'
 
+        ,'w3schools.com'
         ,'wordpress.com'
 
         ,'xuite.net'
