@@ -26,7 +26,7 @@ syntax on
 
 
 
-
+set pastetoggle=<F2>
 
 " When I close a tab, remove the buffer
 set nohidden
@@ -216,45 +216,5 @@ nnoremap <leader><space> :noh<cr>
 
 let g:html_indent_inctags = "html,body,head,tbody"
 
-" === begin of  UltraBlog config ===
-let ub_blog = {'login_name':'oylbin',
-            \'password':'ustc.owen',
-            \'xmlrpc':'http://ouyang.me/xmlrpc.php',
-            \'db':'~/.vim/UltraBlog.db'
-            \}
- 
-" Default pagesize of local post list, see :help ub_local_pagesize for more information
-let ub_local_pagesize = 30
- 
-" Default pagesize of remote post list, see :help ub_remote_pagesize for more information
-let ub_remote_pagesize = 15
- 
-" Proudly show your visitors that you are blogging with the world's most powerful editor
-let ub_append_promotion_link = 1
- 
-" Set width of the local id column in post or page lists
-let ub_list_col1_width = 7
- 
-" Set width of the remote id column in post or page lists
-let ub_list_col2_width = 8
- 
-" Set width of the status column in post or page lists
-let ub_list_col3_width = 11
- 
-" Set this value to 1 if you want to use editor mode.
-let ub_editor_mode = 0
- 
-" Set this value to 1 if you want to save posts/pages immediately after they are fetched from the blog.
-let ub_save_after_opened = 0
- 
-" Set this value to 0 if you do not want to save posts/pages immediately after they are sent to the blog.
-let ub_save_after_sent = 1
- 
-" Set the following options to use a custom extenal command as the converter.
-let ub_converter_command = 'pandoc'
-let ub_converter_options = ['--reference-links']
-let ub_converter_option_from = '--from=%s'
-let ub_converter_option_to = '--to=%s'
-" === begin of  UltraBlog config ===
  
 command! -complete=file -nargs=1 Remove :echo 'Remove: '.'<f-args>'.' '.(delete(<f-args>) == 0 ? 'SUCCEEDED' : 'FAILED')
