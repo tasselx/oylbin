@@ -1,6 +1,12 @@
+" 不使用兼容vi的模式
+set nocompatible
+
 lang en_US.UTF-8
 language mes en_US.UTF-8
 set langmenu=en_US.UTF-8
+
+"set iskeyword=@,48-57,_,-,192-255,#
+set iskeyword=@,48-57,_,192-255
 
 filetype off
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
@@ -11,8 +17,6 @@ endif
 " 自动检测文件类型
 filetype plugin indent on
 
-" 不使用兼容vi的模式
-set nocompatible
 
 " 新建文件时使用的编码
 set fileencoding=utf-8
@@ -113,6 +117,8 @@ inoremap jj <Esc>
 "set formatoptions=qrn1
 "set colorcolumn=85
 
+au BufRead,BufNewFile *.mk		set ft=markdown
+
 " 调用php 检查当前文件的语法
 map <F5> :call Execute_Script()<CR>
 function! Execute_Script()
@@ -128,6 +134,10 @@ function! Execute_Script()
     elseif &filetype == 'make'
         :w
         :make
+    elseif &filetype == 'markdown'
+        :w
+        execute '!pandoc -f markdown -t html % > /tmp/markdown.html'
+        execute '!x-www-browser file:///tmp/markdown.html'
     endif
 endfunction
 
