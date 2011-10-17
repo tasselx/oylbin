@@ -97,6 +97,8 @@ autocmd! bufwritepost .vimrc source %
 
 let mapleader=","
 
+nnoremap <leader><space> :noh<cr>
+
 " Up and down are more logical with g..
 nnoremap <silent> k gk
 nnoremap <silent> j gj
@@ -121,6 +123,9 @@ au BufRead,BufNewFile *.mk		set ft=markdown
 
 " 调用php 检查当前文件的语法
 map <F5> :call Execute_Script()<CR>
+map <leader>r :call Execute_Script()<CR>
+
+
 function! Execute_Script()
     if &filetype == 'php'
         :w
@@ -137,7 +142,8 @@ function! Execute_Script()
     elseif &filetype == 'markdown'
         :w
         execute '!pandoc -f markdown -t html % > /tmp/markdown.html'
-        execute '!x-www-browser file:///tmp/markdown.html'
+        execute '!open -a "Google Chrome.app" file:///tmp/markdown.html'
+        "execute '!x-www-browser file:///tmp/markdown.html'
     endif
 endfunction
 
@@ -146,6 +152,7 @@ map <F3> :grep <C-R><C-W> .
 
 " 在新tab打开当前文件所在的目录
 map <F6> :tabnew %:h<CR>
+map <leader>o :tabnew %:h<CR>
 
 "map <leader>f :tabnew<cr>:FufFile<cr>
 map <leader>f :FufFile<cr>
@@ -170,39 +177,9 @@ map <C-H> gT
 map <C-L> gt
 
 
-if has("unix")
-    "ugly hack
-    let MyName=system("whoami | tr -d '\r\n'")
-    if MyName != 'hotel'
-        map <left> gT
-        map <right> gt
-    endif
+map <left> gT
+map <right> gt
 
-    let MyHost=system("hostname | tr -d '\r\n'")
-    if MyHost == 'owen-laptop'
-        map <left> gT
-        map <right> gt
-        if has("gui_running")
-            set guifont=Monaco\ 10
-        else
-            set t_Co=256
-        endif
-        if &diff
-            set background=dark
-            colorscheme peaksea
-            syntax off
-        else
-            set background=dark
-            colorscheme peaksea
-            "colorscheme desert
-        endif
-    endif
-endif
-if has("gui_running")
-    colorscheme desert
-    set go-=T
-    set go-=m
-endif
 
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
@@ -228,3 +205,13 @@ let g:html_indent_inctags = "html,body,head,tbody"
 
  
 command! -complete=file -nargs=1 Remove :echo 'Remove: '.'<f-args>'.' '.(delete(<f-args>) == 0 ? 'SUCCEEDED' : 'FAILED')
+
+
+set clipboard=unnamed
+if &diff
+    set background=dark
+    colorscheme peaksea
+else
+    set background=dark
+    colorscheme desert
+endif

@@ -14,8 +14,18 @@ termcapinfo xterm|xterms|xs|rxvt ti@:te@
 # 要查看这种特殊的快捷键的key code，可以 
 # cat > /dev/null 
 # 然后在按下快捷键的同时，终端会显示出相应的key code
+
+# pc键盘上的control + 左右
 bindkey ^[[1;5D prev
 bindkey ^[[1;5C next
+
+# mac, terminal, control + 左右
+bindkey \033f next
+bindkey \033b prev
+
+
+bindkey ^[= screen
+bindkey ^[- quit
 
 bindkey ^[0 select 0
 bindkey ^[1 select 1
@@ -35,16 +45,17 @@ bindkey ^[9 select 9
 #bindkey -k k; command
 #bindkey -k F1 command
 # F12 
-bindkey -k F2 screen
+#bindkey -k F2 screen
 
 encoding UTF-8
-attrcolor b ".I"
 
 # 支持256色的终端
 # use `ls /usr/share/terminfo/x/` to see the available terms
-#term "xterm-256color"
+term "xterm-256color"
+attrcolor b ".I"
 #term "xterm-color"
 #term "screen-256color"
 
 # tell screen how to set colors. AB = background, AF=foreground
 termcapinfo xterm* "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+defbce "on"
