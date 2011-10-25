@@ -70,7 +70,6 @@ set hlsearch
 set ignorecase
 "set smartcase
 
-"set guifont=Yahei_Mono:h12:cGB2312
 set backspace=2
 
 "set foldmethod=indent
@@ -193,7 +192,7 @@ function! Set_php_options()
     set keywordprg="help"
     map <leader>t :!phpunit %<cr>
     map <leader>T :!phpunit --filter <C-R><C-W> %<cr>
-    map <F7> :!php -l %<CR>
+    map <leader>c :!php -l %<CR>
 endfunction
 let g:debuggerPort = 9001
 map <S-Insert> "+p
@@ -212,6 +211,9 @@ if &diff
     set background=dark
     colorscheme peaksea
 else
-    set background=dark
-    colorscheme desert
+    "set background=dark
+    "colorscheme desert
 endif
+
+cmap w!! w !sudo tee % >/dev/null
+
