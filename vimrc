@@ -1,7 +1,9 @@
 " 不使用兼容vi的模式
 set nocompatible
 
-lang en_US.UTF-8
+if has("unix")
+    lang en_US.UTF-8
+endif
 language mes en_US.UTF-8
 set langmenu=en_US.UTF-8
 
