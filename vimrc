@@ -217,3 +217,4 @@ endif
 
 cmap w!! w !sudo tee % >/dev/null
 
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes

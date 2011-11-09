@@ -1,0 +1,5 @@
+#!/bin/bash
+option_sid=2
+option_mhost=127.0.0.1
+option_mport=21001
+db_type_and_param=".tcb#lmemb=1024#nmemb=2048#bnum=2000000#opts=ld#rcnum=10000000#xmsiz=128M"

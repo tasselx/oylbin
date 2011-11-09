@@ -6,3 +6,5 @@ activerehashing yes
 pidfile ./pid
 logfile ./log
 dir ./
+appendonly no
+vm-enabled no

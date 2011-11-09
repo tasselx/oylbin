@@ -53,8 +53,9 @@ function start_redis {
             rm $folder_name/pid
         fi
     fi
-    cat $SCRIPTDIR/common.redis > $folder_name/redis.conf
-    cat $SCRIPTDIR/$config_file >> $folder_name/redis.conf
+    # redis 配置文件中，写在后面的配置不会覆盖前面的配置，所以，自定义的配置文件优先级别要高于 common.redis
+    cat $SCRIPTDIR/$config_file > $folder_name/redis.conf
+    cat $SCRIPTDIR/common.redis >> $folder_name/redis.conf
     echo "port $db_port" >> $folder_name/redis.conf
     cd $folder_name && $REDIS_SERVER `pwd`/redis.conf
     sleep 0.1
