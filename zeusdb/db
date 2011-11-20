@@ -1,133 +1,111 @@
-#!/bin/bash
+#!/bin/bash 
 REDIS_SERVER='redis-server'
 TOKYOTYRANT_SERVER="ttserver"
 
 # setting environment variables
 LANG=C
 LC_ALL=C
-PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"
-export LANG LC_ALL PATH
+export LANG LC_ALL
+export SCRIPTDIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $SCRIPTDIR
 
-SCRIPT=`readlink -f $0`
-SCRIPTDIR=`dirname $SCRIPT`
+# 检查数据库程序是否存在
+if ! test -x "$REDIS_SERVER";then
+    REDIS_SERVER_PATH=$(which $REDIS_SERVER)
+    if ! test -x "$REDIS_SERVER_PATH";then
+        echo "redis server binary[$REDIS_SERVER] not found"
+        exit 1
+    fi
+    REDIS_SERVER=$REDIS_SERVER_PATH
+fi
+
+if ! test -x "$TOKYOTYRANT_SERVER";then
+    TOKYOTYRANT_SERVER_PATH=$(which $TOKYOTYRANT_SERVER)
+    if ! test -x "$TOKYOTYRANT_SERVER_PATH";then
+        echo "redis server binary[$TOKYOTYRANT_SERVER] not found"
+        exit 1
+    fi
+    TOKYOTYRANT_SERVER=$TOKYOTYRANT_SERVER_PATH
+fi
 
 function print_usage {
-    echo "$0  [all|dir_name|config_file] [start|stop|restart]"
+    cat <<EOF
+
+USAGE:
+
+    $0 create [tcb|tch|redis] <name> <port>
+    $0 create [tcb|tch] <name> <port> <master_host> <master_port>
+
+    $0 [start|stop|restart] <folder_name>
+
+    TODO $0 clearulog <folder_name>
+
+EOF
     exit 1
 }
 
-if [[ $# -ne 2 ]]; then
-    print_usage
-fi
+function db_create {
+    if test $# -ne 3 && test $# -ne 5;then
+        print_usage
+    fi
+    db_type=$1
+    if test "$db_type" != "tcb" && test "$db_type" != "tch" && test "$db_type" != "redis";then
+        echo "invalid db_type[$db_type]"
+        print_usage
+    fi
+    db_name=$2
+    db_port=$3
+    folder_name=$db_name.$db_type.$db_port
+    if test -d "$SCRIPTDIR/$folder_name" ;then
+        echo "folder[$folder_name] already exists"
+        print_usage
+    fi
+    mkdir $SCRIPTDIR/$folder_name
+    case "$db_type" in
+        tcb|tch)
+            is_slave=0
+            cp $SCRIPTDIR/common.tokyotyrant $SCRIPTDIR/$folder_name/config
+            if test $# -eq 5;then
+                is_slave=1
+                master_host=$4
+                master_port=$5
+                cat >> $SCRIPTDIR/$folder_name/config <<EOF
+                option_sid=2
+                option_mhost=$master_host
+                option_mport=$master_port
+EOF
+            fi
+            if test "$db_type" = "tcb" && test "$is_slave" = "0" 
+            then
+                echo 'db_type_and_param=".tcb#lmemb=1024#nmemb=2048#bnum=2000000#opts=ld#rcnum=10000000#xmsiz=512M"' >>$SCRIPTDIR/$folder_name/config
 
-function start_redis {
-    config_file=$1
-    if [[ ! -f "$SCRIPTDIR/$config_file" ]]; then
-        echo "config file not exists: $SCRIPTDIR/$config_file"
-        return 1
-    fi
-    db_type=`echo $config_file | awk -F. '{print $1}'`
-    db_name=`echo $config_file | awk -F. '{print $2}'`
-    db_port=`echo $config_file | awk -F. '{print $3}'`
-    if [[ "$db_type" != "redis" ]]; then
-        echo "must give start_redis with redis config"
-        return 1
-    fi
+            elif test "$db_type" = "tcb" && test "$is_slave" = "1" 
+            then
+                echo 'db_type_and_param=".tcb#lmemb=1024#nmemb=2048#bnum=2000000#opts=ld#rcnum=10000000#xmsiz=128M"' >>$SCRIPTDIR/$folder_name/config
 
-    folder_name="$SCRIPTDIR/${db_type}.${db_name}.${db_port}"
-    if [[ ! -d "$folder_name" ]]; then
-        mkdir $folder_name
-        if [[ $? -ne 0 ]]; then
-            echo "failed to mkdir $folder_name"
-            return 1
-        fi
-    fi
-    if [[ -f "$folder_name/pid" ]];then
-        pid=`cat $folder_name/pid`
-        num=`ps $pid | wc -l`
-        if [[ $num -gt 1 ]];then
-            ps $pid
-            echo "redis server is running"
-            return 1
-        else
-            rm $folder_name/pid
-        fi
-    fi
-    # redis 配置文件中，写在后面的配置不会覆盖前面的配置，所以，自定义的配置文件优先级别要高于 common.redis
-    cat $SCRIPTDIR/$config_file > $folder_name/redis.conf
-    cat $SCRIPTDIR/common.redis >> $folder_name/redis.conf
-    echo "port $db_port" >> $folder_name/redis.conf
-    cd $folder_name && $REDIS_SERVER `pwd`/redis.conf
-    sleep 0.1
-    if [[ -f "$folder_name/pid" ]];then
-        echo "success start redis server with config $SCRIPTDIR/$config_file"
-        pid=`cat $folder_name/pid`
-        ps $pid
-    else
-        echo "failed to start redis server with config $SCRIPTDIR/$config_file"
-        tail $folder_name/redis.log
-    fi
+            elif test "$db_type" = "tch" && test "$is_slave" = "0" 
+            then
+                echo 'db_type_and_param=".tch#bnum=20000000#rcnum=1000000#xmsiz=256M"' >>$SCRIPTDIR/$folder_name/config
+                
+            elif test "$db_type" = "tch"&& test "$is_slave" = "1" 
+            then
+                echo 'db_type_and_param=".tch#bnum=20000000#rcnum=1000000#xmsiz=64M"' >>$SCRIPTDIR/$folder_name/config
+            fi
+            ;;
+        redis)
+            cp $SCRIPTDIR/common.redis $SCRIPTDIR/$folder_name/redis.conf
+            echo "port $db_port" >> $SCRIPTDIR/$folder_name/redis.conf
+            ;;
+    esac
 }
-function stop_redis {
-    config_file=$1
-    if [[ ! -f "$SCRIPTDIR/$config_file" ]]; then
-        echo "config file not exists: $SCRIPTDIR/$config_file"
-        return 1
-    fi
-    db_type=`echo $config_file | awk -F. '{print $1}'`
-    db_name=`echo $config_file | awk -F. '{print $2}'`
-    db_port=`echo $config_file | awk -F. '{print $3}'`
 
-    folder_name="$SCRIPTDIR/${db_type}.${db_name}.${db_port}"
-    stop $folder_name/pid
-}
-function stop_tokyotyrant {
-    stop_redis $1
-}
-function start_tokyotyrant {
+function db_start_tokyotyrant {
 
-    config_file=$1
-    if [[ ! -f "$SCRIPTDIR/$config_file" ]]; then
-        echo "config file not exists: $SCRIPTDIR/$config_file"
-        return 1
-    fi
-    db_type=`echo $config_file | awk -F. '{print $1}'`
-    db_name=`echo $config_file | awk -F. '{print $2}'`
-    db_port=`echo $config_file | awk -F. '{print $3}'`
-    if [[ "$db_type" != "tokyotyrant" ]]; then
-        echo "must give start_tokyotyrant with tokyotyrant config"
-        return 1
-    fi
+    folder_name=$SCRIPTDIR/$folder_name
 
-    folder_name="$SCRIPTDIR/${db_type}.${db_name}.${db_port}"
-    if [[ ! -d "$folder_name" ]]; then
-        mkdir $folder_name
-        if [[ $? -ne 0 ]]; then
-            echo "failed to mkdir $folder_name"
-            return 1
-        fi
-    fi
-    if [[ -f "$folder_name/pid" ]];then
-        pid=`cat $folder_name/pid`
-        num=`ps $pid | wc -l`
-        if [[ $num -gt 1 ]];then
-            ps $pid
-            echo "tokyotyrant server is running"
-            return 1
-        else
-            rm $folder_name/pid
-        fi
-    fi
+    source $folder_name/config
 
-    source $SCRIPTDIR/common.tokyotyrant
-    source $SCRIPTDIR/$config_file
-
-    if [ -z "$db_port" ] || [ -z "$db_name" ] ; then
-        printf 'Invalid configuration\n'
-        return 1
-    fi
-
-    printf 'Starting the server of Tokyo Tyrant\n'
+    echo "Starting the server of Tokyo Tyrant"
 
     cmd="$TOKYOTYRANT_SERVER -port $db_port"
     for key in host thnum tout ulim sid mhost mport ; do
@@ -163,32 +141,67 @@ function start_tokyotyrant {
         printf 'The server could not started\n'
         return 1
     fi
+
 }
 
-function start_all {
-    cd $SCRIPTDIR
-    for config_file in `ls redis*conf`;do
-        start_redis $config_file
-    done
-    cd $SCRIPTDIR
-    for config_file in `ls tokyotyrant*conf`;do
-        start_tokyotyrant $config_file
-    done
+function db_start_redis {
+
+    folder_name=$SCRIPTDIR/$folder_name
+    cd $folder_name && $REDIS_SERVER $folder_name/redis.conf
+    sleep 0.1
+    if [[ -f "$folder_name/pid" ]];then
+        echo "success start redis server with config $folder_name/redis.conf"
+        pid=`cat $folder_name/pid`
+        ps $pid
+    else
+        echo "failed to start redis server with config $folder_name/redis.conf"
+        tail $folder_name/redis.log
+    fi
 }
-function stop_all {
-    cd $SCRIPTDIR
-    for config_file in `ls *conf`;do
-        db_type=`echo $config_file | awk -F. '{print $1}'`
-        db_name=`echo $config_file | awk -F. '{print $2}'`
-        db_port=`echo $config_file | awk -F. '{print $3}'`
-        pidfile="$SCRIPTDIR/${db_type}.${db_name}.${db_port}/pid"
-        stop $pidfile
-    done
+
+function db_start {
+    if test $# -ne 1 ;then
+        print_usage
+    fi
+
+    folder_name=$(basename $1)
+
+    if ! test -d "$folder_name";then
+        echo "folder[$folder_name] not exists"
+        print_usage
+    fi
+
+    db_name=`echo $folder_name | awk -F. '{print $1}'`
+    db_type=`echo $folder_name | awk -F. '{print $2}'`
+    db_port=`echo $folder_name | awk -F. '{print $3}'`
+
+    if test -f "$folder_name/pid" ;then
+        pid=`cat $folder_name/pid`
+        num=`ps $pid | wc -l`
+        if test $num -gt 1 ;then
+            ps $pid
+            echo "Server [$folder_name] is already running"
+            return 1
+        else
+            rm $folder_name/pid
+        fi
+    fi
+
+    if test -z "$db_port"  || test  -z "$db_name" || test -z "$db_type" ; then
+        printf 'Invalid configuration\n'
+        return 1
+    fi
+
+    export folder_name db_name db_type db_port
+
+    if test "$db_type" = "tch" || test "$db_type" = "tcb";then
+        db_start_tokyotyrant
+    elif test "$db_type" = "redis";then
+        db_start_redis
+    fi
+
 }
-function restart_all {
-    stop_all
-    start_all
-}
+
 function stop {
     pidfile=$1
     printf 'Stopping the server \n'
@@ -222,29 +235,44 @@ function stop {
     fi
 }
 
-db_type=`echo $1 | awk -F. '{print $1}'`
-if [[ "$db_type" != "redis" ]] && [[ "$db_type" != 'tokyotyrant' ]] && [[ "$db_type" != 'all' ]]; then
-    echo "invalid db type: $db_type"
-    exit 1
-fi
-if [[ -d $1 ]]; then
-    config_file=$1.conf
-else
-    config_file=$1
-fi
+function db_stop {
+    if test $# -ne 1 ;then
+        print_usage
+    fi
 
-case "$2" in
-start)
-    start_${db_type} $config_file
-    ;;
-stop)
-    stop_${db_type} $config_file
-    ;;
-restart)
-    stop_${db_type} $config_file
-    start_${db_type} $config_file
-    ;;
-*)
-    print_usage
-    ;;
+    folder_name=$(basename $1)
+
+    if ! test -d "$folder_name";then
+        echo "folder[$folder_name] not exists"
+        print_usage
+    fi
+
+    stop $folder_name/pid
+}
+
+case "$1" in
+    create)
+        if test $# -eq 4 || test $# -eq 6;then
+            shift 1
+            db_create $*
+        else
+            print_usage
+        fi
+        ;;
+    start)
+        shift 1
+        db_start $*
+        ;;
+    stop)
+        shift 1
+        db_stop $*
+        ;;
+    restart)
+        shift 1
+        db_stop $*
+        db_start $*
+        ;;
+    *)
+        print_usage
+        ;;
 esac
