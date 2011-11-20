@@ -38,7 +38,17 @@ USAGE:
 
     $0 [start|stop|restart] <folder_name>
 
-    TODO $0 clearulog <folder_name>
+EXAMPLES:
+
+    start a new ttserver to store main user info on port 21001
+
+        $0 create tcb main 21001
+        $0 start main.tcb.21001/
+
+    start a new slave ttserver on 31001 for a main user info master on 21001
+        
+        $0 create tcb main 31001 127.0.0.1 21001
+        $0 start main.tcb.31001/
 
 EOF
     exit 1
