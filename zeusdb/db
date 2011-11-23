@@ -1,6 +1,7 @@
-#!/bin/bash 
+#!/bin/bash
 REDIS_SERVER='redis-server'
 TOKYOTYRANT_SERVER="ttserver"
+TOKYOTYRANT_SERVER_MANAGER="tcrmgr"
 
 # setting environment variables
 LANG=C
@@ -10,23 +11,17 @@ export SCRIPTDIR="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPTDIR
 
 # 检查数据库程序是否存在
-if ! test -x "$REDIS_SERVER";then
-    REDIS_SERVER_PATH=$(which $REDIS_SERVER)
-    if ! test -x "$REDIS_SERVER_PATH";then
-        echo "redis server binary[$REDIS_SERVER] not found"
-        exit 1
+for binary in REDIS_SERVER TOKYOTYRANT_SERVER TOKYOTYRANT_SERVER_MANAGER
+do
+    if ! test -x "${!binary}";then
+        binary_path=$(which ${!binary})
+        if ! test -x "$binary_path";then
+            echo "binary[${!binary}] not found"
+            exit 1
+        fi
+        export $binary=$binary_path
     fi
-    REDIS_SERVER=$REDIS_SERVER_PATH
-fi
-
-if ! test -x "$TOKYOTYRANT_SERVER";then
-    TOKYOTYRANT_SERVER_PATH=$(which $TOKYOTYRANT_SERVER)
-    if ! test -x "$TOKYOTYRANT_SERVER_PATH";then
-        echo "redis server binary[$TOKYOTYRANT_SERVER] not found"
-        exit 1
-    fi
-    TOKYOTYRANT_SERVER=$TOKYOTYRANT_SERVER_PATH
-fi
+done
 
 function print_usage {
     cat <<EOF
@@ -36,7 +31,7 @@ USAGE:
     $0 create [tcb|tch|redis] <name> <port>
     $0 create [tcb|tch] <name> <port> <master_host> <master_port>
 
-    $0 [start|stop|restart] <folder_name>
+    $0 [start|stop|restart|backup] <folder_name>
 
 EXAMPLES:
 
@@ -260,6 +255,26 @@ function db_stop {
     stop $folder_name/pid
 }
 
+function db_backup {
+    if test $# -ne 1 ;then
+        print_usage
+    fi
+
+    folder_name=$(basename $1)
+
+    if ! test -d "$folder_name";then
+        echo "folder[$folder_name] not exists"
+        print_usage
+    fi
+
+    db_name=`echo $folder_name | awk -F. '{print $1}'`
+    db_type=`echo $folder_name | awk -F. '{print $2}'`
+    db_port=`echo $folder_name | awk -F. '{print $3}'`
+
+    $TOKYOTYRANT_SERVER_MANAGER copy -port $db_port 127.0.0.1 "@$SCRIPTDIR/backup.sh"
+
+}
+
 case "$1" in
     create)
         if test $# -eq 4 || test $# -eq 6;then
@@ -281,6 +296,10 @@ case "$1" in
         shift 1
         db_stop $*
         db_start $*
+        ;;
+    backup)
+        shift 1
+        db_backup $*
         ;;
     *)
         print_usage
