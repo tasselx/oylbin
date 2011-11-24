@@ -79,7 +79,3 @@ umask 002
 
 export PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig
 export LD_LIBRARY_PATH=$HOME/local/lib
-xrdb -load ~/.Xresources
-
-export qqnumber=3776714
-export qqpassword=owenqqowen
