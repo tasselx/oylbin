@@ -32,6 +32,7 @@ USAGE:
     $0 create [tcb|tch] <name> <port> <master_host> <master_port>
 
     $0 [start|stop|restart|backup] <folder_name>
+    $0 start <folder_name> [folder_name ...]
 
 EXAMPLES:
 
@@ -165,46 +166,47 @@ function db_start_redis {
 }
 
 function db_start {
-    if test $# -ne 1 ;then
+    if test $# -lt 1 ;then
         print_usage
     fi
 
-    folder_name=$(basename $1)
-
-    if ! test -d "$folder_name";then
-        echo "folder[$folder_name] not exists"
-        print_usage
-    fi
-
-    db_name=`echo $folder_name | awk -F. '{print $1}'`
-    db_type=`echo $folder_name | awk -F. '{print $2}'`
-    db_port=`echo $folder_name | awk -F. '{print $3}'`
-
-    if test -f "$folder_name/pid" ;then
-        pid=`cat $folder_name/pid`
-        num=`ps $pid | wc -l`
-        if test $num -gt 1 ;then
-            ps $pid
-            echo "Server [$folder_name] is already running"
-            return 1
-        else
-            rm $folder_name/pid
+    for name in "$*"
+    do
+        folder_name=$(basename $name)
+        if ! test -d "$folder_name";then
+            echo "folder[$folder_name] not exists"
+            print_usage
         fi
-    fi
 
-    if test -z "$db_port"  || test  -z "$db_name" || test -z "$db_type" ; then
-        printf 'Invalid configuration\n'
-        return 1
-    fi
+        db_name=`echo $folder_name | awk -F. '{print $1}'`
+        db_type=`echo $folder_name | awk -F. '{print $2}'`
+        db_port=`echo $folder_name | awk -F. '{print $3}'`
 
-    export folder_name db_name db_type db_port
+        if test -f "$folder_name/pid" ;then
+            pid=`cat $folder_name/pid`
+            num=`ps $pid | wc -l`
+            if test $num -gt 1 ;then
+                ps $pid
+                echo "Server [$folder_name] is already running"
+                return 1
+            else
+                rm $folder_name/pid
+            fi
+        fi
 
-    if test "$db_type" = "tch" || test "$db_type" = "tcb";then
-        db_start_tokyotyrant
-    elif test "$db_type" = "redis";then
-        db_start_redis
-    fi
+        if test -z "$db_port"  || test  -z "$db_name" || test -z "$db_type" ; then
+            printf 'Invalid configuration\n'
+            return 1
+        fi
 
+        export folder_name db_name db_type db_port
+
+        if test "$db_type" = "tch" || test "$db_type" = "tcb";then
+            db_start_tokyotyrant
+        elif test "$db_type" = "redis";then
+            db_start_redis
+        fi
+    done
 }
 
 function stop {
