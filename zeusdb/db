@@ -269,13 +269,21 @@ function db_backup {
         echo "folder[$folder_name] not exists"
         print_usage
     fi
+    if ! test -x "$SCRIPTDIR/backup.sh";then
+        echo "[$SCRIPTDIR/backup.sh] not exists or executable"
+        print_usage
+    fi
 
     db_name=`echo $folder_name | awk -F. '{print $1}'`
     db_type=`echo $folder_name | awk -F. '{print $2}'`
     db_port=`echo $folder_name | awk -F. '{print $3}'`
 
+    now=$(date "+%Y-%m-%d %H:%M:%S")
+    echo "[$now] start backup $SCRIPTDIR/$folder_name"
+    echo "$TOKYOTYRANT_SERVER_MANAGER copy -port $db_port 127.0.0.1 \"@$SCRIPTDIR/backup.sh\""
     $TOKYOTYRANT_SERVER_MANAGER copy -port $db_port 127.0.0.1 "@$SCRIPTDIR/backup.sh"
-
+    echo "last backup:"
+    echo $(tail -n 1 $SCRIPTDIR/$folder_name/backup/backup.log)
 }
 
 case "$1" in
