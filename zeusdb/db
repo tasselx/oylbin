@@ -170,8 +170,9 @@ function db_start {
         print_usage
     fi
 
-    for name in "$*"
+    for name in $*
     do
+        cd $SCRIPTDIR
         folder_name=$(basename $name)
         if ! test -d "$folder_name";then
             echo "folder[$folder_name] not exists"
