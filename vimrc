@@ -120,7 +120,7 @@ inoremap jj <Esc>
 "set formatoptions=qrn1
 "set colorcolumn=85
 
-au BufRead,BufNewFile *.mk		set ft=markdown
+"au BufRead,BufNewFile *.mk		set ft=markdown
 
 " 调用php 检查当前文件的语法
 map <F5> :call Execute_Script()<CR>
@@ -220,3 +220,6 @@ endif
 cmap w!! w !sudo tee % >/dev/null
 
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
+let filetype_m='objc'
+
+map <leader>l :Tlist<cr>
