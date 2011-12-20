@@ -1,52 +1,11 @@
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
-
-# don't put duplicate lines in the history. See bash(1) for more options
-# ... or force ignoredups and ignorespace
-HISTCONTROL=ignoredups:ignorespace
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias 55pull='ssh work@h55 "cd /home/work/zeus/apps/dev/ && git pull "'
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+export LANGUAGE='en_US:en'
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-#export GREP_OPTIONS="-ir"
 
-export LANGUAGE='en_US:en'
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/Branch:\1/'
@@ -62,11 +21,17 @@ xterm-256color|screen-256color)
     #export PS1="\u@\h:\w\n> "
     ;;
 esac
-PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME} \007"'
 
 umask 002
+#export GREP_OPTIONS="-ir"
+export PATH=/data/work/src/android-sdks/platform-tools:/opt/local/bin:/opt/local/sbin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
 
-export PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig
-export LD_LIBRARY_PATH=$HOME/local/lib
-export PATH=/opt/local/bin:/opt/local/sbin:~/bin:~/local/bin:/usr/local/bin:/home/owen/.gem/ruby/1.8/bin:/home/owen/Downloads/google_appengine:$PATH
-alias s='screen -D -RR -T screen-256color'
+# aliases
+alias s='screen -D -RR'
+alias ll='ls -l --color'
+alias ttt="ctags -R . && cscope -R -b "
+
+source ~/.git-completion.bash
+alias t='tunnel'
+
+export EDITOR=/usr/local/bin/vim
