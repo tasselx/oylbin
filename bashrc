@@ -44,9 +44,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export GREP_OPTIONS="-ir"
+#export GREP_OPTIONS="-ir"
 
-export PATH=~/bin:~/local/bin:~/local/src/redis/src:/home/owen/.gem/ruby/1.8/bin:/home/owen/Downloads/google_appengine:$PATH
 export LANGUAGE='en_US:en'
 
 parse_git_branch() {
@@ -64,18 +63,10 @@ xterm-256color|screen-256color)
     ;;
 esac
 PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME} \007"'
-HOSTNAME=`hostname`
-case "$HOSTNAME" in 
-oylbin-laptop)
-    alias screen='screen -T screen-256color'
-    #xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-    ;;
-*)
-    alias screen='screen -T xterm-256color'
-    alias s='screen -T xterm-256color'
-    ;;
-esac
+
 umask 002
 
 export PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig
 export LD_LIBRARY_PATH=$HOME/local/lib
+export PATH=/opt/local/bin:/opt/local/sbin:~/bin:~/local/bin:/usr/local/bin:/home/owen/.gem/ruby/1.8/bin:/home/owen/Downloads/google_appengine:$PATH
+alias s='screen -D -RR -T screen-256color'

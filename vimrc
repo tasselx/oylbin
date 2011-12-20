@@ -31,6 +31,8 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,big5
 syntax on
 
 
+set autoread                    " read open files again when changed outside Vim
+set autowrite                   " write a modified buffer on each :next , ...
 
 set pastetoggle=<F2>
 
@@ -72,7 +74,7 @@ set hlsearch
 set ignorecase
 "set smartcase
 
-set backspace=2
+set backspace=indent,eol,start  " backspacing over everything in insert mode
 
 "set foldmethod=indent
 
@@ -223,3 +225,53 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 let filetype_m='objc'
 
 map <leader>l :Tlist<cr>
+
+
+" OmniCppComplete
+au BufNewFile,BufRead,BufEnter *.cpp,*.hpp set omnifunc=omni#cpp#complete#Main
+set tags=./tags;/
+set tags+=~/.vim/bundle/OmniCppComplete/tags/cpp
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+let OmniCpp_SelectFirstItem = 2
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+
+"-------------------------------------------------------------------------------
+" comma always followed by a space
+"-------------------------------------------------------------------------------
+"inoremap  ,  ,<Space>
+"
+"-------------------------------------------------------------------------------
+" autocomplete parenthesis, brackets and braces
+"-------------------------------------------------------------------------------
+"inoremap ( ()<Left>
+"inoremap [ []<Left>
+"inoremap { {}<Left>
+"
+"vnoremap ( s()<Esc>P<Right>%
+"vnoremap [ s[]<Esc>P<Right>%
+"vnoremap { s{}<Esc>P<Right>%
+"
+"-------------------------------------------------------------------------------
+" autocomplete quotes (visual and select mode)
+"-------------------------------------------------------------------------------
+"xnoremap  '  s''<Esc>P<Right>
+"xnoremap  "  s""<Esc>P<Right>
+"xnoremap  `  s``<Esc>P<Right>
+
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+"map <M-h> <C-T>
+"map <M-l> <C-]>
+
+let tlist_objc_settings    = 'objc;i:interface;c:class;m:method;p:property'
+
+autocmd BufRead,BufNewFile *.mm :set ft=objc
