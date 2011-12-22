@@ -1,9 +1,7 @@
 " 不使用兼容vi的模式
 set nocompatible
 
-if has("unix")
-    lang en_US.UTF-8
-endif
+lang en_US.UTF-8
 language mes en_US.UTF-8
 set langmenu=en_US.UTF-8
 
@@ -19,32 +17,29 @@ endif
 " 自动检测文件类型
 filetype plugin indent on
 
-
 " 新建文件时使用的编码
 set fileencoding=utf-8
 
 " 打开文件时使用的编码
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,big5
 
-
 " 开启语法高亮
 syntax on
 
+" read open files again when changed outside Vim
+set autoread
+" write a modified buffer on each :next , ...
+set autowrite
 
-set autoread                    " read open files again when changed outside Vim
-set autowrite                   " write a modified buffer on each :next , ...
-
+" F2 切换paste 和 nopaste 模式
+" 在paste模式下粘贴文本，会保留文本原样，不会做自动缩进，自动注释等等处理。
 set pastetoggle=<F2>
 
 " When I close a tab, remove the buffer
 set nohidden
 
-" Since I use linux, I want this
-let g:clipbrdDefaultReg = '+'
-
 " 更好的命令自动提示菜单
 set wildmenu
-
 
 " 显示标尺
 set ruler
@@ -53,6 +48,8 @@ set ruler
 set autoindent
 "set smartindent
 
+" Since I use linux, I want this
+let g:clipbrdDefaultReg = '+'
 
 " <TAB> 自动转换为4个空格
 set smarttab
@@ -74,23 +71,16 @@ set hlsearch
 set ignorecase
 "set smartcase
 
-set backspace=indent,eol,start  " backspacing over everything in insert mode
+" backspacing over everything in insert mode
+set backspace=indent,eol,start  
 
 "set foldmethod=indent
-
 
 " No sound on errors
 set noerrorbells
 "set novisualbell
 set t_vb=
 
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
 
 " vimrc被修改时自动重新加载
 autocmd! bufwritepost .vimrc source %
@@ -100,6 +90,7 @@ autocmd! bufwritepost .vimrc source %
 
 let mapleader=","
 
+" 去除上次搜索后的高亮
 nnoremap <leader><space> :noh<cr>
 
 " Up and down are more logical with g..
@@ -187,17 +178,14 @@ map <right> gt
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
-"autocmd BufNewFile,Bufread *.php call Set_php_options()
 autocmd filetype php call Set_php_options()
-"syntax enable
-"let g:php_folding=2
-"set foldmethod=syntax
 function! Set_php_options() 
     set keywordprg="help"
     map <leader>t :!phpunit %<cr>
     map <leader>T :!phpunit --filter <C-R><C-W> %<cr>
     map <leader>c :!php -l %<CR>
 endfunction
+
 let g:debuggerPort = 9001
 map <S-Insert> "+p
 inoremap <S-Insert> <esc>"+pa
@@ -221,8 +209,9 @@ endif
 
 cmap w!! w !sudo tee % >/dev/null
 
+" 为了mac下面能够正确的编辑crontab
 au BufEnter /private/tmp/crontab.* setl backupcopy=yes
-let filetype_m='objc'
+
 
 map <leader>l :Tlist<cr>
 
@@ -239,7 +228,16 @@ let OmniCpp_MayCompleteDot = 1 " autocomplete after .
 let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
 let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-let OmniCpp_SelectFirstItem = 2
+let OmniCpp_SelectFirstItem = 1
+
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
@@ -275,3 +273,4 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 let tlist_objc_settings    = 'objc;i:interface;c:class;m:method;p:property'
 
 autocmd BufRead,BufNewFile *.mm :set ft=objc
+autocmd BufRead,BufNewFile *.m :set ft=objc
