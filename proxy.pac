@@ -1,3 +1,7 @@
+function regExpMatch(url, pattern) {
+	try { return new RegExp(pattern).test(url); } catch(ex) { return false; }
+}
+
 function FindProxyForURL(url, host)
 {
     url = url.toLowerCase();
@@ -73,22 +77,18 @@ function FindProxyForURL(url, host)
         ,'ytimg.com'
     ];
     
-    var exp_list = [
-     'http(s)?://(sites|encrypted|spreadsheets|groups|picasaweb|feedproxy|fusion)\.google\.com/.*',
-     'http://www\.google\.com/(((search|url)\?)|analytics|calendar|profile).*',
-     'http://[^/]*/search\\?q=cache.*'
-    ];
+    var exp_list = [ ];
 
     for(var index = 0;index<site_list.length;index++){
          if(host==site_list[index] ||
              shExpMatch(host, "*." + site_list[index])){
-            return "SOCKS5 localhost:8527; DIRECT";
+            return "SOCKS5 127.0.0.1:8527";
          }
     }
     for(var index = 0;index<exp_list.length;index++){
         var re = new RegExp(exp_list[index]);
         if(url.match(re)){
-            return "SOCKS5 localhost:8527; DIRECT";
+            return "SOCKS5 127.0.0.1:8527";
         }
     }
     return "DIRECT";

@@ -1,35 +1,29 @@
 #!/bin/bash
 
-function commit_file(){
-    filename=$1
-    rsync -avz $filename hotel@122.11.61.28:~/oylbin/sshtunnel/tmp/
-    basename=$(basename $filename)
-    ssh hotel@122.11.61.28 "/home/hotel/oylbin/sshtunnel/tool.sh commit_file $basename"
-}
-
-function update_svn(){
-    ssh hotel@122.11.61.28 "/home/hotel/oylbin/sshtunnel/tool.sh update_svn"
-}
-
 case "$1" in
-    update|up)
-        update_svn
+    sync)
+        ssh hotel@122.11.61.28 "touch /home/hotel/oylbin/sshtunnel/need_commit/sync"
+        echo "svn should be synced in 2 minutes"
     ;;
     commit|ci)
-        shift 1
-        commit_file $@
+        filename=$2
+        scp $filename hotel@122.11.61.28:/home/hotel/oylbin/sshtunnel/need_commit/
+        echo "$filename should be committed in 2 minutes"
+        ssh hotel@122.11.61.28 "touch /home/hotel/oylbin/sshtunnel/need_commit/sync"
+        echo "svn should be synced in 2 minutes"
     ;;
     restart)
-        ssh hotel@122.11.61.28 "cd /home/hotel/oylbin/sshtunnel && touch restart && tail access.log"
+        ssh hotel@122.11.61.28 "cd /home/hotel/oylbin/sshtunnel && touch restart && tail access.log && date +'%Y-%m-%d %H:%M:%S'"
+        echo "ssh tunnel should be restart in 1 minitue"
         ;;
     log)
-        ssh hotel@122.11.61.28 "cd /home/hotel/oylbin/sshtunnel && tail access.log"
+        ssh hotel@122.11.61.28 "cd /home/hotel/oylbin/sshtunnel && tail access.log && date +'%Y-%m-%d %H:%M:%S'"
         ;;
     tunnel)
         ssh -t hotel@122.11.61.28 "cd /home/hotel/oylbin/sshtunnel && ./bridge.sh"
         ;;
 	*)
-		echo "Usage: $0 {update|up|commit|ci|restart|log|tunnel}"
+		echo "Usage: $0 {sync|commit|ci|restart|log|tunnel}"
 		exit 1
 	;;
 esac
