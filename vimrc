@@ -1,6 +1,8 @@
 " 不使用兼容vi的模式
 set nocompatible
 
+set runtimepath=~/oylbin/vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/oylbin/vim/after
+
 lang en_US.UTF-8
 language mes en_US.UTF-8
 set langmenu=en_US.UTF-8
@@ -214,6 +216,7 @@ au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 
 
 map <leader>l :Tlist<cr>
+map <leader>t :tabs<cr>
 
 
 " OmniCppComplete
