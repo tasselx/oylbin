@@ -277,3 +277,12 @@ let tlist_objc_settings    = 'objc;i:interface;c:class;m:method;p:property'
 
 autocmd BufRead,BufNewFile *.mm :set ft=objc
 autocmd BufRead,BufNewFile *.m :set ft=objc
+
+if has("gui_running")
+    set go-=T
+    set go-=m
+    set guifont=Monaco:h14
+    colorscheme peaksea
+    win 140 40
+    winp 200 0
+endif

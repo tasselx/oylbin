@@ -6,6 +6,19 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 
+up() {
+    local level
+    if test "$#" = "0";then
+       level=1
+    else
+       level=$1
+    fi
+    local path=""
+    for ((i=1;i<=level;i++)); do
+        path="../$path"
+    done
+    cd $path
+}
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/Branch:\1/'
@@ -30,8 +43,13 @@ export PATH=/data/work/src/android-sdks/platform-tools:/opt/local/bin:/opt/local
 alias s='screen -D -RR'
 alias ll='ls -l --color'
 alias ttt="ctags -R . && cscope -R -b "
+alias src="cd /data/work/src"
 
 source ~/.git-completion.bash
 alias t='tunnel'
 
 export EDITOR=/usr/local/bin/vim
+
+if [ -f /opt/local/etc/bash_completion ]; then
+    . /opt/local/etc/bash_completion
+fi

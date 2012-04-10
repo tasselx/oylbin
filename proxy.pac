@@ -33,6 +33,7 @@ function FindProxyForURL(url, host)
         ,'google.com.hk'
         ,'google.com.tw'
         ,'googleusercontent.com'
+        ,'gstatic.com'
 
         ,'hecaitou.net'
 
@@ -45,6 +46,7 @@ function FindProxyForURL(url, host)
 
         ,'metweek.com'
         ,'mail-archive.com'
+        ,'mediafire.com'
 
         ,'payhk.boyaa.us'
         ,'pixnet.net'
@@ -63,6 +65,7 @@ function FindProxyForURL(url, host)
         ,'tweetphoto.com'
         ,'teamdouche.net'
 
+        ,'vimeo.com'
         ,'w3schools.com'
         ,'wordpress.com'
 
