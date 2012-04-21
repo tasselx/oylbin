@@ -37,7 +37,7 @@ esac
 
 umask 002
 #export GREP_OPTIONS="-ir"
-export PATH=/data/work/src/android-sdks/platform-tools:/opt/local/bin:/opt/local/sbin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
+export PATH=/data/work/src/android-sdks/platform-tools:/opt/local/bin:/opt/local/sbin:~/Downloads/Dropbox/bin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
 
 # aliases
 alias s='screen -D -RR'

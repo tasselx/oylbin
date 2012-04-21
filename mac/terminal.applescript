@@ -7,9 +7,10 @@
 -- 可以在用quicksilver或者fastscript把这个脚本绑定到自己习惯的快捷键上面。
 -- 我用的是 Option + c
 --
--- Terminal的设置里面，把window的title设置勾选上tty
--- 这样可以保证每个terminal window的title都不一样
--- 这样脚本才能正常工作
+-- 脚本能正常工作，需要以下设置
+-- 1. 系统默认语言设置为英文
+-- 2. 系统设置中"Universal Access"中的"Enable access for assitive devices"需要被勾选上
+-- 3. Terminal的设置里面，把window的title设置勾选上tty，这样可以保证每个terminal window的title都不一样
 
 
 -- Terminal 的 Window菜单中 窗口列表项 的起始 index

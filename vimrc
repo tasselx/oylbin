@@ -123,23 +123,21 @@ map <leader>r :call Execute_Script()<CR>
 
 
 function! Execute_Script()
+    :w
     if &filetype == 'php'
-        :w
         execute '!php %'
     elseif &filetype == 'python'
-        :w
         execute '!python %'
     elseif &filetype == 'sh'
-        :w
         execute '!bash -ex %'
     elseif &filetype == 'make'
-        :w
         :make
     elseif &filetype == 'markdown'
-        :w
         execute '!pandoc -f markdown -t html % > /tmp/markdown.html'
         execute '!open -a "Google Chrome.app" file:///tmp/markdown.html'
         "execute '!x-www-browser file:///tmp/markdown.html'
+    elseif &filetype == 'lua'
+        execute '!lua %'
     endif
 endfunction
 
@@ -286,3 +284,5 @@ if has("gui_running")
     win 140 40
     winp 200 0
 endif
+
+let g:lua_complete_omni = 1
