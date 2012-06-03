@@ -150,7 +150,7 @@ map <leader>o :tabnew %:h<CR>
 
 "map <leader>f :tabnew<cr>:FufFile<cr>
 map <leader>f :FufFile<cr>
-
+"map <leader>f :<C-U>CtrlP<CR>
 
 
 map <leader>q :q<cr>
@@ -179,11 +179,15 @@ autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stde
 autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
 autocmd filetype php call Set_php_options()
+autocmd filetype lua call Set_lua_options()
 function! Set_php_options() 
     set keywordprg="help"
     map <leader>t :!phpunit %<cr>
     map <leader>T :!phpunit --filter <C-R><C-W> %<cr>
     map <leader>c :!php -l %<CR>
+endfunction
+function! Set_lua_options() 
+    map <leader>c :!luac -p %<CR>
 endfunction
 
 let g:debuggerPort = 9001
@@ -285,4 +289,10 @@ if has("gui_running")
     winp 200 0
 endif
 
-let g:lua_complete_omni = 1
+let g:lua_complete_omni = 0
+map <left> gT
+map <right> gt
+
+let g:ctrlp_open_new_file = 't'
+let g:ctrlp_map = '<C-p>'
+set ffs=unix,mac,dos
