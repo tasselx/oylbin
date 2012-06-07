@@ -48,7 +48,9 @@ alias fr="cd /data/work/ares/frontend"
 alias sc="cd /data/work/ares/frontend/svn/Resources/script"
 alias ares="cd /data/work/ares/"
 
-source ~/.git-completion.bash
+if test -f "~/.git-completion.bash";then
+    source ~/.git-completion.bash
+fi
 alias t='tunnel'
 
 export EDITOR=/usr/local/bin/vim
