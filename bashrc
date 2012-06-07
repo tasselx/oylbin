@@ -44,6 +44,9 @@ alias s='screen -D -RR'
 alias ll='ls -l --color'
 alias ttt="ctags -R . && cscope -R -b "
 alias src="cd /data/work/src"
+alias fr="cd /data/work/ares/frontend"
+alias sc="cd /data/work/ares/frontend/svn/Resources/script"
+alias ares="cd /data/work/ares/"
 
 source ~/.git-completion.bash
 alias t='tunnel'

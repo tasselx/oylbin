@@ -125,7 +125,13 @@ map <leader>r :call Execute_Script()<CR>
 function! Execute_Script()
     :w
     if &filetype == 'php'
-        execute '!php %'
+        let s:php_script_name=expand("%")
+        if strlen(s:php_script_name) > 8 &&
+            strpart(s:php_script_name,strlen(s:php_script_name)-8,strlen(s:php_script_name))=="Test.php"
+            execute '!phpunit %'
+        else
+            execute '!php %'
+        endif
     elseif &filetype == 'python'
         execute '!python %'
     elseif &filetype == 'sh'

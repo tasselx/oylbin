@@ -1,6 +1,7 @@
 vim/UltraBlog.db
 vim/plugin/ultrablog/
 vim/ftplugin/blog.vim
+vim/ftplugin/diary.vim
 .DS_Store
 vim/.VimballRecord
 vim/.netrwhist
