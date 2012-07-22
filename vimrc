@@ -137,7 +137,7 @@ function! Execute_Script()
         execute '!bash -ex %'
     elseif &filetype == 'make'
         :make
-    elseif &filetype == 'markdown'
+    elseif &filetype == 'markdown' || &filetype == 'notes' 
         execute '!pandoc -f markdown -t html % > /tmp/markdown.html'
         execute '!open -a "Google Chrome.app" file:///tmp/markdown.html'
         "execute '!x-www-browser file:///tmp/markdown.html'
@@ -301,3 +301,5 @@ map <right> gt
 let g:ctrlp_open_new_file = 't'
 let g:ctrlp_map = '<C-p>'
 set ffs=unix,mac,dos
+let g:notes_directory = '~/Downloads/Dropbox/Notes'
+let g:notes_suffix = '.txt'

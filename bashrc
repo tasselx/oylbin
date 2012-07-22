@@ -37,7 +37,7 @@ esac
 
 umask 002
 #export GREP_OPTIONS="-ir"
-export PATH=/data/work/src/android-sdks/platform-tools:/opt/local/bin:/opt/local/sbin:~/Downloads/Dropbox/bin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
+export PATH=/data/work/src/android-sdk-macosx/tools:/data/work/src/android-sdk-macosx/platform-tools:/opt/local/bin:/opt/local/sbin:~/Downloads/Dropbox/bin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
 
 # aliases
 alias s='screen -D -RR'
@@ -47,6 +47,12 @@ alias src="cd /data/work/src"
 alias fr="cd /data/work/ares/frontend"
 alias sc="cd /data/work/ares/frontend/svn/Resources/script"
 alias ares="cd /data/work/ares/"
+alias bb="cd /data/work/ares/apps/master"
+alias vms="cd /data/work/ares/vms/"
+alias dp="cd /data/work/ares/deploy/"
+alias and="cd /data/work/ares/frontend/ares_core/android"
+alias 26up="ssh hotel@122.11.61.26 'cd /home/hotel/ares/apps/master && git pull origin master'"
+alias 50up="ssh hotel@192.168.1.50 'cd /home/hotel/ares/apps/master && git pull origin master'"
 
 if test -f "~/.git-completion.bash";then
     source ~/.git-completion.bash

@@ -48,6 +48,8 @@ function FindProxyForURL(url, host)
         ,'mail-archive.com'
         ,'mediafire.com'
 
+        ,'name.com'
+
         ,'payhk.boyaa.us'
         ,'pixnet.net'
         ,'plurk.com'

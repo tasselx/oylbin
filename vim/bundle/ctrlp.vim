@@ -1,1 +1,1 @@
-/Users/oylbin/local/src/ctrlp.vim/
+/data/work/src/ctrlp.vim
