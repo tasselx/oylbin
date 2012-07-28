@@ -15,7 +15,9 @@
 
 -- Terminal 的 Window菜单中 窗口列表项 的起始 index
 global magic_index
-set magic_index to 21
+-- 21 for mac os x 10.7 lion
+-- 19 for mac os x 10.8 mountain lion
+set magic_index to 19
 
 on array_search(arr,i)
     repeat with idx from 1 to count of arr
@@ -27,21 +29,21 @@ on array_search(arr,i)
 end array_search
 
 on bring_to_front(window_index)
-	tell application "System Events"
-		click menu item (magic_index + window_index) of menu "Window" of menu bar 1 of process "Terminal"
-		tell application "Terminal" to activate
-	end tell
+    tell application "System Events"
+        click menu item (magic_index + window_index) of menu "Window" of menu bar 1 of process "Terminal"
+        tell application "Terminal" to activate
+    end tell
 end bring_to_front
 
 on get_terminal_list()
-	tell application "System Events"
+    tell application "System Events"
         -- 如果没有正在运行的terminal进程，那么需要先activate
-		tell application "Terminal" to activate
-		tell process "Terminal"
-			tell menu bar 1
-				tell menu "Window"
+        tell application "Terminal" to activate
+        tell process "Terminal"
+            tell menu bar 1
+                tell menu "Window"
                     set window_title_list to {}
-					set menu_list to get menu items
+                    set menu_list to get menu items
                     if menu_list's length > magic_index then
                         set window_list to (items (magic_index+1) through (menu_list's length) of menu_list)
                         repeat with idx from 1 to count of window_list
@@ -49,10 +51,10 @@ on get_terminal_list()
                         end repeat
                     end if
                     return window_title_list
-				end tell
-			end tell
-		end tell
-	end tell
+                end tell
+            end tell
+        end tell
+    end tell
 end get_terminal_list
 
 
@@ -67,7 +69,7 @@ on run_script()
     --say all_terminal_window's length 
 
     if all_terminal_window's length = 0 then
-        tell app "Terminal" 
+        tell application "Terminal" 
             do script ""
             activate
         end tell
@@ -87,6 +89,6 @@ on run_script()
             bring_to_front(window_index)
         end if
     end if
-end run
+end run_script
 
 run_script()
