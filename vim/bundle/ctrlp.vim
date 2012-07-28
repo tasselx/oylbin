@@ -1,1 +1,0 @@
-/data/work/src/ctrlp.vim
