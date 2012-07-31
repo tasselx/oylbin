@@ -13,6 +13,7 @@ function FindProxyForURL(url, host)
         ,'bitsnoop.com'
         ,'blogger.com'
         ,'blogspot.com'
+        ,'blogspot.tw'
         ,'bit.ly'
 
         ,'caobian.info'
