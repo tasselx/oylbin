@@ -22,7 +22,7 @@ function l9#isCompatible(ver)
   return 
 endfunction
 
-let s:VERSION_FACTOR = str2float('0.01')
+let s:VERSION_FACTOR = 0.01
 
 " returns false if the caller script should finish.
 " a:vimVersion: if 0, don't check vim version
@@ -32,7 +32,7 @@ function l9#guardScriptLoading(path, vimVersion, l9Version, exprs)
   if exists(loadedVarName)
     return 0
   elseif a:vimVersion > 0 && a:vimVersion > v:version
-    echoerr a:path . ' requires Vim version ' . string(a:vimVersion * s:VERSION_FACTOR)
+    "echoerr a:path . ' requires Vim version ' . string(a:vimVersion * s:VERSION_FACTOR)
     return 0
   elseif a:l9Version > 0 && (a:l9Version > s:L9_VERSION_CURRENT ||
         \                    a:l9Version < s:L9_VERSION_PASSABLE)
