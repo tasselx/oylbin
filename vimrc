@@ -301,5 +301,7 @@ map <right> gt
 let g:ctrlp_open_new_file = 't'
 let g:ctrlp_map = '<C-p>'
 set ffs=unix,mac,dos
-let g:notes_directory = '~/Downloads/Dropbox/Notes'
+let g:notes_directory = '~/Dropbox/Notes'
 let g:notes_suffix = '.txt'
+let g:notes_title_sync = 'change_title'
+let g:notes_list_bullets = ['*']
