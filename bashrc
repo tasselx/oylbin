@@ -37,7 +37,7 @@ esac
 
 umask 002
 #export GREP_OPTIONS="-ir"
-export PATH=/data/work/src/android-sdk-macosx/tools:/data/work/src/android-sdk-macosx/platform-tools:/opt/local/bin:/opt/local/sbin:~/Downloads/Dropbox/bin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
+export PATH=/data/work/src/android-ndk-r8:/data/work/src/android-sdk-macosx/tools:/data/work/src/android-sdk-macosx/platform-tools:/opt/local/bin:/opt/local/sbin:~/Downloads/Dropbox/bin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
 
 # aliases
 alias s='screen -D -RR'
@@ -64,3 +64,4 @@ export EDITOR=/usr/local/bin/vim
 if [ -f /opt/local/etc/bash_completion ]; then
     . /opt/local/etc/bash_completion
 fi
+LD_LIBRARY_PATH=/opt/local/lib
