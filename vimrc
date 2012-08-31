@@ -160,7 +160,9 @@ map <leader>f :FufFile<cr>
 
 map <leader>q :q<cr>
 nmap <leader>w :w!<cr>
-nmap <leader>n :tabnew<space>
+
+nmap <leader>n :tabnew /data/work/src/wiki/wiki/<cr>
+
 "vmap <leader>c "+y
 "vmap <leader>x "+x
 "map <leader>d :!screen bash -c "cd \"`pwd`\" && exec $SHELL --login"<cr>
@@ -301,7 +303,8 @@ map <right> gt
 let g:ctrlp_open_new_file = 't'
 let g:ctrlp_map = '<C-p>'
 set ffs=unix,mac,dos
-let g:notes_directory = '~/Dropbox/Notes'
-let g:notes_suffix = '.txt'
+let g:notes_directory = '/data/work/wiki/wiki/work2/'
+let g:notes_suffix = '.markdown'
 let g:notes_title_sync = 'change_title'
 let g:notes_list_bullets = ['*']
+let g:notes_smart_quotes = 0

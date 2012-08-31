@@ -40,7 +40,7 @@ umask 002
 export PATH=/data/work/src/android-ndk-r8:/data/work/src/android-sdk-macosx/tools:/data/work/src/android-sdk-macosx/platform-tools:/opt/local/bin:/opt/local/sbin:~/Downloads/Dropbox/bin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
 
 # aliases
-alias s='screen -D -RR'
+alias ss='screen -D -RR'
 alias ll='ls -l --color'
 alias ttt="ctags -R . && cscope -R -b "
 alias src="cd /data/work/src"
@@ -53,6 +53,8 @@ alias dp="cd /data/work/ares/deploy/"
 alias and="cd /data/work/ares/frontend/ares_core/android"
 alias 26up="ssh hotel@122.11.61.26 'cd /home/hotel/ares/apps/master && git pull origin master'"
 alias 50up="ssh hotel@192.168.1.50 'cd /home/hotel/ares/apps/master && git pull origin master'"
+alias wiki="cd /data/work/wiki/wiki/"
+alias wiki2="cd /data/work/src/wiki/wiki/"
 
 if test -f "~/.git-completion.bash";then
     source ~/.git-completion.bash
