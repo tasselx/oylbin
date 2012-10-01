@@ -1,12 +1,13 @@
 "=============================================================================
-" Copyright (c) 2007-2010 Takeshi NISHIDA
+" Copyright (c) 2007-2009 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
+if exists('g:loaded_autoload_fuf_changelist') || v:version < 702
   finish
 endif
+let g:loaded_autoload_fuf_changelist = 1
 
 " }}}1
 "=============================================================================
@@ -23,11 +24,6 @@ function fuf#changelist#getSwitchOrder()
 endfunction
 
 "
-function fuf#changelist#getEditableDataNames()
-  return []
-endfunction
-
-"
 function fuf#changelist#renewCache()
 endfunction
 
@@ -38,7 +34,7 @@ endfunction
 
 "
 function fuf#changelist#onInit()
-  call fuf#defineLaunchCommand('FufChangeList', s:MODE_NAME, '""', [])
+  call fuf#defineLaunchCommand('FufChangeList', s:MODE_NAME, '""')
 endfunction
 
 " }}}1
@@ -95,7 +91,7 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(g:fuf_changelist_prompt, self.partialMatching, '')
+  return fuf#formatPrompt(g:fuf_changelist_prompt, self.partialMatching)
 endfunction
 
 "
@@ -104,8 +100,8 @@ function s:handler.getPreviewHeight()
 endfunction
 
 "
-function s:handler.isOpenable(enteredPattern)
-  return 1
+function s:handler.targetsPath()
+  return 0
 endfunction
 
 "

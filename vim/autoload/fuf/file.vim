@@ -1,12 +1,13 @@
 "=============================================================================
-" Copyright (c) 2007-2010 Takeshi NISHIDA
+" Copyright (c) 2007-2009 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
+if exists('g:loaded_autoload_fuf_file') || v:version < 702
   finish
 endif
+let g:loaded_autoload_fuf_file = 1
 
 " }}}1
 "=============================================================================
@@ -23,11 +24,6 @@ function fuf#file#getSwitchOrder()
 endfunction
 
 "
-function fuf#file#getEditableDataNames()
-  return []
-endfunction
-
-"
 function fuf#file#renewCache()
   let s:cache = {}
 endfunction
@@ -39,9 +35,9 @@ endfunction
 
 "
 function fuf#file#onInit()
-  call fuf#defineLaunchCommand('FufFile'                    , s:MODE_NAME, '""', [])
-  call fuf#defineLaunchCommand('FufFileWithFullCwd'         , s:MODE_NAME, 'fnamemodify(getcwd(), '':p'')', [])
-  call fuf#defineLaunchCommand('FufFileWithCurrentBufferDir', s:MODE_NAME, 'expand(''%:~:.'')[:-1-len(expand(''%:~:.:t''))]', [])
+  call fuf#defineLaunchCommand('FufFile'                    , s:MODE_NAME, '""')
+  call fuf#defineLaunchCommand('FufFileWithFullCwd'         , s:MODE_NAME, 'fnamemodify(getcwd(), '':p'')')
+  call fuf#defineLaunchCommand('FufFileWithCurrentBufferDir', s:MODE_NAME, 'expand(''%:~:.'')[:-1-len(expand(''%:~:.:t''))]')
 endfunction
 
 " }}}1
@@ -52,7 +48,7 @@ let s:MODE_NAME = expand('<sfile>:t:r')
 
 "
 function s:enumItems(dir)
-  let key = join([getcwd(), g:fuf_ignoreCase, g:fuf_file_exclude, a:dir], "\n")
+  let key = getcwd() . g:fuf_file_exclude . "\n" . a:dir
   if !exists('s:cache[key]')
     let s:cache[key] = fuf#enumExpandedDirsEntries(a:dir, g:fuf_file_exclude)
     call fuf#mapToSetSerialIndex(s:cache[key], 1)
@@ -62,13 +58,15 @@ function s:enumItems(dir)
 endfunction
 
 "
-function s:enumNonCurrentItems(dir, bufNrPrev, cache)
+function s:enumNonCurrentItems(dir, bufNr, cache)
   let key = a:dir . 'AVOIDING EMPTY KEY'
   if !exists('a:cache[key]')
-    " NOTE: Comparing filenames is faster than bufnr('^' . fname . '$')
-    let bufNamePrev = bufname(a:bufNrPrev)
+    " NOTE: filtering should be done with
+    "       'bufnr("^" . v:val.word . "$") != a:bufNr'.
+    "       But it takes a lot of time!
+    let bufName = bufname(a:bufNr)
     let a:cache[key] =
-          \ filter(copy(s:enumItems(a:dir)), 'v:val.word !=# bufNamePrev')
+          \ filter(copy(s:enumItems(a:dir)), 'v:val.word != bufName')
   endif
   return a:cache[key]
 endfunction
@@ -86,7 +84,7 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(g:fuf_file_prompt, self.partialMatching, '')
+  return fuf#formatPrompt(g:fuf_file_prompt, self.partialMatching)
 endfunction
 
 "
@@ -95,8 +93,8 @@ function s:handler.getPreviewHeight()
 endfunction
 
 "
-function s:handler.isOpenable(enteredPattern)
-  return a:enteredPattern =~# '[^/\\]$'
+function s:handler.targetsPath()
+  return 1
 endfunction
 
 "

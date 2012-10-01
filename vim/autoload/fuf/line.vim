@@ -1,12 +1,13 @@
 "=============================================================================
-" Copyright (c) 2007-2010 Takeshi NISHIDA
+" Copyright (c) 2007-2009 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
+if exists('g:loaded_autoload_fuf_line') || v:version < 702
   finish
 endif
+let g:loaded_autoload_fuf_line = 1
 
 " }}}1
 "=============================================================================
@@ -23,11 +24,6 @@ function fuf#line#getSwitchOrder()
 endfunction
 
 "
-function fuf#line#getEditableDataNames()
-  return []
-endfunction
-
-"
 function fuf#line#renewCache()
 endfunction
 
@@ -38,7 +34,7 @@ endfunction
 
 "
 function fuf#line#onInit()
-  call fuf#defineLaunchCommand('FufLine', s:MODE_NAME, '""', [])
+  call fuf#defineLaunchCommand('FufLine', s:MODE_NAME, '""')
 endfunction
 
 " }}}1
@@ -61,7 +57,7 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(g:fuf_line_prompt, self.partialMatching, '')
+  return fuf#formatPrompt(g:fuf_line_prompt, self.partialMatching)
 endfunction
 
 "
@@ -70,8 +66,8 @@ function s:handler.getPreviewHeight()
 endfunction
 
 "
-function s:handler.isOpenable(enteredPattern)
-  return 1
+function s:handler.targetsPath()
+  return 0
 endfunction
 
 "

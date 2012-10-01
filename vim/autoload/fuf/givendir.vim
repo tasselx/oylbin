@@ -1,12 +1,13 @@
 "=============================================================================
-" Copyright (c) 2007-2010 Takeshi NISHIDA
+" Copyright (c) 2007-2009 Takeshi NISHIDA
 "
 "=============================================================================
 " LOAD GUARD {{{1
 
-if !l9#guardScriptLoading(expand('<sfile>:p'), 0, 0, [])
+if exists('g:loaded_autoload_fuf_givendir') || v:version < 702
   finish
 endif
+let g:loaded_autoload_fuf_givendir = 1
 
 " }}}1
 "=============================================================================
@@ -20,11 +21,6 @@ endfunction
 "
 function fuf#givendir#getSwitchOrder()
   return -1
-endfunction
-
-"
-function fuf#givendir#getEditableDataNames()
-  return []
 endfunction
 
 "
@@ -69,7 +65,7 @@ endfunction
 
 "
 function s:handler.getPrompt()
-  return fuf#formatPrompt(s:prompt, self.partialMatching, '')
+  return fuf#formatPrompt(s:prompt, self.partialMatching)
 endfunction
 
 "
@@ -78,7 +74,7 @@ function s:handler.getPreviewHeight()
 endfunction
 
 "
-function s:handler.isOpenable(enteredPattern)
+function s:handler.targetsPath()
   return 1
 endfunction
 
@@ -91,7 +87,7 @@ endfunction
 "
 function s:handler.makePreviewLines(word, count)
   return fuf#makePreviewLinesAround(
-        \ fuf#glob(fnamemodify(a:word, ':p') . '*'),
+        \ split(glob(fnamemodify(a:word, ':p') . '*'), "\n"),
         \ [], a:count, self.getPreviewHeight())
   return 
 endfunction
