@@ -1,7 +1,7 @@
 " 不使用兼容vi的模式
 set nocompatible
 
-set runtimepath=~/oylbin/vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/oylbin/vim/after
+set runtimepath=~/local/src/oylbin/vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/oylbin/vim/after
 
 lang en_US.UTF-8
 language mes en_US.UTF-8
