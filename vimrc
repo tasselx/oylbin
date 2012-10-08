@@ -118,8 +118,7 @@ inoremap jj <Esc>
 "au BufRead,BufNewFile *.mk		set ft=markdown
 
 
-
-if version >= 720
+if v:version >= 702
     " 调用php 检查当前文件的语法
     map <F5> :call Execute_Script()<CR>
     map <leader>r :call Execute_Script()<CR>
