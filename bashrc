@@ -27,10 +27,10 @@ parse_git_branch() {
 case "$TERM" in
 xterm-256color|screen-256color)
     SCREEEN_PS1="Window:$WINDOW"
-    export PS1="\e[0;33m\u@\h:\w (${SCREEEN_PS1} \$(parse_git_branch)) > \e[m\n> "
+    export PS1="\e[0;32m\u@\h:\w (${SCREEEN_PS1} \$(parse_git_branch)) > \e[m\n> "
     ;;
 *)
-    export PS1="\e[0;36m\u@\h:\w (\$(parse_git_branch)) > \e[m\n> "
+    export PS1="\e[0;31m\u@\h:\w (\$(parse_git_branch)) > \e[m\n> "
     #export PS1="\u@\h:\w\n> "
     ;;
 esac
@@ -55,6 +55,7 @@ alias 26up="ssh hotel@122.11.61.26 'cd /home/hotel/ares/apps/master && git pull 
 alias 50up="ssh hotel@192.168.1.50 'cd /home/hotel/ares/apps/master && git pull origin master'"
 alias wiki="cd /data/work/wiki/wiki/"
 alias wiki2="cd /data/work/src/wiki/wiki/"
+export ANDROID_HOME=/data/work/src/android-sdk-macosx
 
 if test -f "~/.git-completion.bash";then
     source ~/.git-completion.bash

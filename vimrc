@@ -13,7 +13,7 @@ set iskeyword=@,48-57,_,192-255
 filetype off
 " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 if has("unix")
-    call pathogen#runtime_append_all_bundles()
+    silent! call pathogen#runtime_append_all_bundles()
 endif
 
 " 自动检测文件类型
