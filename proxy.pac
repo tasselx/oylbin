@@ -9,6 +9,7 @@ function FindProxyForURL(url, host)
         ,'appspot.com'
         ,'avno1.com'
         ,'android.com'
+        ,'amazon.com'
 
         ,'bitsnoop.com'
         ,'blogger.com'
@@ -18,21 +19,27 @@ function FindProxyForURL(url, host)
 
         ,'caobian.info'
 
+        ,'edgekey.net'
+
         ,'fc2.com'
         ,'feedburner.com'
+        ,'feedly.com'
         ,'ff.im'
         ,'flickr.com'
         ,'friendfeed.com'
         ,'facebook.com'
         ,'facebook.net'
         ,'fbcdn.net'
+        ,'github.global.ssl.fastly.net'
 
         ,'gawker.com'
         ,'ggpht.com'
+        ,'github.com'
         ,'goo.gl'
         ,'google.com'
         ,'google.com.hk'
         ,'google.com.tw'
+        ,'googleapis.com'
         ,'googleusercontent.com'
         ,'gstatic.com'
 
@@ -59,6 +66,9 @@ function FindProxyForURL(url, host)
         ,'sexinsex.net'
         ,'scribd.com'
         ,'scribdassets.com'
+        ,'slideshare.net'
+        ,'sstatic.net'
+
 
         ,'t.co'
         ,'twitgoo.com'
