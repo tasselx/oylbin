@@ -3,7 +3,7 @@ startup_message off
 # 禁用 visual bell， 解决屏闪的问题
 vbell off
 hardstatus alwayslastline
-hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+hardstatus string '%{= kG}[ %{G} %H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
 
 # 解决 gnome-terminal + screen 不能滚屏的问题
 termcapinfo xterm* ti@:te@
@@ -22,10 +22,12 @@ bindkey ^[[1;5C next
 # mac, terminal, control + 左右
 bindkey \033f next
 bindkey \033b prev
+bindkey ^[l next
+bindkey ^[h prev
 
 
 bindkey ^[= screen
-bindkey ^[- quit
+bindkey ^[- kill
 
 bindkey ^[0 select 0
 bindkey ^[1 select 1

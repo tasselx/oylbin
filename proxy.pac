@@ -31,6 +31,7 @@ function FindProxyForURL(url, host)
         ,'facebook.net'
         ,'fbcdn.net'
         ,'github.global.ssl.fastly.net'
+        ,'fastly.net'
 
         ,'gawker.com'
         ,'ggpht.com'
@@ -42,6 +43,7 @@ function FindProxyForURL(url, host)
         ,'googleapis.com'
         ,'googleusercontent.com'
         ,'gstatic.com'
+        ,'googleapis.com'
 
         ,'hecaitou.net'
 
@@ -63,6 +65,7 @@ function FindProxyForURL(url, host)
         ,'plurk.com'
         ,'posterous.com'
 
+        ,'sex.com'
         ,'sexinsex.net'
         ,'scribd.com'
         ,'scribdassets.com'
@@ -81,8 +84,11 @@ function FindProxyForURL(url, host)
         ,'vimeo.com'
         ,'w3schools.com'
         ,'wordpress.com'
+        ,'witopia.net'
+        ,'zopim.com'
 
         ,'xuite.net'
+        ,'x-art.com'
 
         ,'youhot.com'
         ,'youtube.com'

@@ -1,8 +1,6 @@
 " 不使用兼容vi的模式
 set nocompatible
 
-set runtimepath=~/local/src/oylbin/vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/oylbin/vim/after
-
 lang en_US.UTF-8
 language mes en_US.UTF-8
 set langmenu=en_US.UTF-8
@@ -10,10 +8,13 @@ set langmenu=en_US.UTF-8
 "set iskeyword=@,48-57,_,-,192-255,#
 set iskeyword=@,48-57,_,192-255
 
-filetype off
-" http://stevelosh.com/blog/2010/09/coming-home-to-vim/
-if has("unix")
-    silent! call pathogen#runtime_append_all_bundles()
+if isdirectory("/Users/oylbin/local/oylbin/vim")
+    set runtimepath=/Users/oylbin/local/oylbin/vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,/Users/oylbin/local/oylbin/vim
+    filetype off
+    " http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+    if has("unix")
+        silent! call pathogen#runtime_append_all_bundles()
+    endif
 endif
 
 " 自动检测文件类型
@@ -214,7 +215,7 @@ command! -complete=file -nargs=1 Remove :echo 'Remove: '.'<f-args>'.' '.(delete(
 set clipboard=unnamed
 if &diff
     set background=dark
-    colorscheme peaksea
+    "colorscheme peaksea
 else
     "set background=dark
     "colorscheme desert
@@ -305,8 +306,4 @@ map <right> gt
 let g:ctrlp_open_new_file = 't'
 let g:ctrlp_map = '<C-p>'
 set ffs=unix,mac,dos
-let g:notes_directory = '/data/work/wiki/wiki/work2/'
-let g:notes_suffix = '.markdown'
-let g:notes_title_sync = 'change_title'
-let g:notes_list_bullets = ['*']
-let g:notes_smart_quotes = 0
+

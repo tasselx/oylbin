@@ -37,24 +37,31 @@ esac
 
 umask 002
 #export GREP_OPTIONS="-ir"
-export PATH=/data/work/src/android-ndk-r8:/data/work/src/android-sdk-macosx/tools:/data/work/src/android-sdk-macosx/platform-tools:/opt/local/bin:/opt/local/sbin:~/Downloads/Dropbox/bin:~/bin:~/local/bin:~/local/gnu_coreutils/bin:/usr/local/bin:$PATH
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/share/python:/usr/local/sbin:/data/work/src/android-ndk-r8:/data/work/src/android-sdk-macosx/tools:/data/work/src/android-sdk-macosx/platform-tools:~/bin:~/local/bin:/usr/local/bin:$PATH"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # aliases
 alias ss='screen -D -RR'
-alias ll='ls -l --color'
-alias ttt="ctags -R . && cscope -R -b "
+alias ll='ls -lh'
 alias src="cd /data/work/src"
-alias fr="cd /data/work/ares/frontend"
-alias sc="cd /data/work/ares/frontend/svn/Resources/script"
-alias ares="cd /data/work/ares/"
+alias fr="cd /data/work/src/ares"
+alias sc="cd /data/work/src/ares/svn/Resources/script"
 alias bb="cd /data/work/ares/apps/master"
 alias vms="cd /data/work/ares/vms/"
 alias dp="cd /data/work/ares/deploy/"
-alias and="cd /data/work/ares/frontend/ares_core/android"
-alias 26up="ssh hotel@122.11.61.26 'cd /home/hotel/ares/apps/master && git pull origin master'"
-alias 50up="ssh hotel@192.168.1.50 'cd /home/hotel/ares/apps/master && git pull origin master'"
+alias and="cd /data/work/src/ares/ares_core/android"
+
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en1"
+alias ips="ifconfig -a | grep -o 'inet6\? \(\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\|[a-fA-F0-9:]\+\)' | sed -e 's/inet6* //'"
+
 alias wiki="cd /data/work/wiki/wiki/"
-alias wiki2="cd /data/work/src/wiki/wiki/"
 export ANDROID_HOME=/data/work/src/android-sdk-macosx
 
 if test -f "~/.git-completion.bash";then
@@ -62,9 +69,9 @@ if test -f "~/.git-completion.bash";then
 fi
 alias t='tunnel'
 
-export EDITOR=/usr/local/bin/vim
+export EDITOR=vim
 
-if [ -f /opt/local/etc/bash_completion ]; then
-    . /opt/local/etc/bash_completion
-fi
-LD_LIBRARY_PATH=/opt/local/lib
+export HISTSIZE=1000000
+export HISTFILESIZE=1000000
+shopt -s histappend
+
